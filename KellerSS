@@ -18,20 +18,17 @@ echo -e "${CYAN}
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
 |_|\_ \___,_|_|_|\___/_ |   \____/_____
-${NC}"
-
-echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+${NC}${BRIGHT_CYAN}Coded By: KellerSS${NC}"
 
 echo ""
 
-echo -e "${BLUE}      ╔══════════════════════════╗"
-echo -e "      ║      MENU PRINCIPAL      ║"
-echo -e "      ╚══════════════════════════╝${NC}"
+echo -e "${BLUE}╔══════════════════════════╗${NC}"
+echo -e "${BLUE}║      MENU PRINCIPAL      ║${NC}"
+echo -e "${BLUE}╚══════════════════════════╝${NC}"
 
 echo ""
 
-echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
-echo ""
+echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
 
 echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
 echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
