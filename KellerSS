@@ -1,50 +1,38 @@
 #!/data/data/com.termux/files/usr/bin/bash
-
-# Limpa a tela
 clear
 
-# Cores
+# Cores ANSI
 CYAN="\033[0;36m"
 BLUE="\033[0;34m"
 WHITE="\033[1;37m"
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
-MENU_BLUE="\033[0;94m"  # azul forte para MENU PRINCIPAL
-NC="\033[0m" # sem cor
+MENU_BLUE="\033[0;94m"  # Azul forte para MENU PRINCIPAL
+NC="\033[0m"  # Reset
 
 # Título e Discord
 echo -e "${CYAN}KellerSS Android ${BLUE}Fucking Cheaters${NC}"
 echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
 # ASCII Art
-<<<<<<< HEAD
-echo -e "${CIAN}
+echo -e "${CYAN}
  _  __       _ _            ______ ______                 
-| |/ / ___ _| | | ___ _ _|   ____/ ____|
-|   < / _   | | |/ _ \   __| |__ \___  \
-=======
-cat << "EOF"
-${CYAN}
- _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
-|   < / _ ` | | |/ _ \   __| |__ \___  \
->>>>>>> 5c790f6 (Atualiza KellerSS com MENU azul forte e centralizado)
-|_|\_ \___,_|_|_|\___/_ |   \____/_____/
-EOF
+|   < / _ \ | |/ _ \   __| |__ \___  \\
+|_|\\_ \___,_|_|_|\\___/_ |   \\____/_____/
+${NC}"
 
 echo -e "${CYAN}Coded By: KellerSS${NC}"
 
-# MENU PRINCIPAL ASCII (azul forte)
-cat << EOF
-${MENU_BLUE}
-╔══════════════════════════╗
-║      MENU PRINCIPAL      ║
-╚══════════════════════════╝
-${NC}
-EOF
+# MENU PRINCIPAL azul forte
+echo -e "${MENU_BLUE}
+ ╔══════════════════════════╗
+ ║      MENU PRINCIPAL      ║
+ ╚══════════════════════════╝
+${NC}"
 
-# ADB status
+# ADB
 echo -e "${WHITE}ADB: ${GREEN}● Dispositivo conectado${NC}"
 
 # Opções
