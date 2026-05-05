@@ -19,10 +19,10 @@ echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
 # ASCII Art
 echo -e "${CYAN}
- _  __       _ _            ______ ______
-| |/ / ___ _| | | ___ _._|   ____/ ____|
-|   < / _ \ | |/ _ \   __| |__ \\___  \\
-|_|\\_ \\___,_|_|_|\\___/_ |   \\____/_____/
+ _  __       _ _             ______ ______
+| |/ / ___ _| | |  ___  _._|  ____/ ____|
+|   < / _ ` | | | / _ \   __| |__ \___ \
+|_|\\_\___,_|_|_|_\___/_ |   \____/_____/
 ${NC}"
 
 # Coded By
@@ -46,6 +46,6 @@ echo -e "${GREEN}[3]${WHITE} Salvar Dump${NC}"
 echo -e "${RED}[S]${WHITE} Sair${NC}"
 
 # Seta
-echo -e "${CYAN}▸ Escolha uma das opções acima:${NC}"
+echo -e "${arrow}▸ Escolha uma das opções acima:${NC}"
 
 # Aqui você pode adicionar lógica futura para ler input do usuário
