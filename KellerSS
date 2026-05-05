@@ -1,13 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Script: KellerSS-Android Termux
-# Autor: KellerSS
-# Compatível com Termux (Android)
-
 clear
 
-# ========================
 # Cores ANSI
-# ========================
 CYAN="\033[0;36m"
 BRIGHT_CYAN="\033[1;36m"
 BLUE="\033[0;34m"
@@ -17,87 +11,72 @@ GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 NC="\033[0m"
 
-# ========================
+# Função para centralizar texto
+center() {
+    cols=$(tput cols)
+    printf "%*s\n" $(( (${#1} + cols) / 2 )) "$1"
+}
+
 # Título e Discord
-# ========================
-echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
-echo -e "${WHITE}discord.gg/allianceoficial${NC}"
+center "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
+center "${WHITE}discord.gg/allianceoficial${NC}"
 
-# ========================
-# ASCII Art
-# ========================
-echo -e "${CYAN}
- _  __       _ _            ______ ______
-| |/ / ___ _| | | ___ _._|    ____/ ____|
-|   < / _ \ | | |/ _ \   __| |__ \ \__ \
-|_|\_ \___,_|_|_|\___/_ |   \____/______/
-${NC}"
-
-# ========================
-# Coded By colado na ASCII Art
-# ========================
-echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
-
-# ========================
-# Espaço antes do menu
-# ========================
 echo ""
 
-# ========================
+# ASCII Art (cada linha centralizada)
+center "${CYAN} _  __       _ _            ______ ______${NC}"
+center "${CYAN}| |/ / ___ _| | | ___ _._|   ____/ ____|${NC}"
+center "${CYAN}|   < / _ \ | |/ _ \   __| |__ \\\___  \\${NC}"
+center "${CYAN}|_|\\_ \\___,_|_|_|\\___/_ |   \\____/_____/${NC}"
+
+# Coded By
+center "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+
+echo ""
+
 # Menu Principal
-# ========================
-echo -e "${BLUE}      ╔══════════════════════════╗"
-echo -e "      ║      MENU PRINCIPAL      ║"
-echo -e "      ╚══════════════════════════╝${NC}"
+center "${BLUE}╔══════════════════════════╗${NC}"
+center "${BLUE}║      MENU PRINCIPAL      ║${NC}"
+center "${BLUE}╚══════════════════════════╝${NC}"
 
-# Espaço entre menu e ADB
 echo ""
 
-# ========================
 # Status ADB
-# ========================
-echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
-echo ""  # espaço abaixo do ADB
+center "ADB: ${GREEN}● Dispositivo conectado${NC}"
 
-# ========================
-# Opções
-# ========================
-echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
-echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
-echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
-echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
-echo -e "  ${RED}[S]${WHITE} Sair${NC}"
-
-# Linha em branco para empurrar o input pra baixo
 echo ""
 
-# ========================
-# Prompt de escolha (seta bright cyan)
-# ========================
-echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
+# Opções
+center "[0] Parear Dispositivo"
+center "[1] Escanear FreeFire Normal"
+center "[2] Escanear FreeFire Max"
+center "[3] Salvar Dump"
+center "[S] Sair"
+
+echo ""
+
+# Prompt de escolha
+center "${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
 
-# ========================
-# Lógica de escolha
-# ========================
 case $escolha in
     0)
-        echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}"
+        center "${GREEN}Você escolheu: Parear Dispositivo${NC}"
         ;;
     1)
-        echo -e "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
+        center "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
         ;;
     2)
-        echo -e "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
+        center "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
         ;;
     3)
-        echo -e "${GREEN}Você escolheu: Salvar Dump${NC}"
+        center "${GREEN}Você escolheu: Salvar Dump${NC}"
         ;;
     [Ss])
-        echo -e "${RED}Saindo...${NC}"
+        center "${RED}Saindo...${NC}"
         exit 0
         ;;
     *)
-        echo -e "${RED}Opção inválida!${NC}"
+        center "${RED}Opção inválida!${NC}"
         ;;
 esac
