@@ -10,24 +10,31 @@ GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 NC="\033[0m"
 
+# Título
 echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
 echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
+# ASCII Art
 echo -e "${CYAN}
  _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
-|_|\_ \___,_|_|_|\___/_ |   \____/_____ ${BRIGHT_CYAN}Coded By: KellerSS${NC}
-"
+|_|\_ \___,_|_|_|\___/_ |   \____/_____
+${NC}"
 
-# Menu Principal alinhado
+# Coded By separado e colorido
+echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+
+echo ""
+
+# Menu Principal alinhado com opções
 echo -e "${BLUE}╔══════════════════════════╗${NC}"
 echo -e "${BLUE}║      MENU PRINCIPAL      ║${NC}"
 echo -e "${BLUE}╚══════════════════════════╝${NC}"
 
 echo ""  # espaço
 
-# Status ADB alinhado com opções
+# ADB alinhado com números
 echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
 
 echo ""  # espaço
@@ -41,7 +48,7 @@ echo -e "[S] Sair"
 
 echo ""  # espaço antes da seta
 
-# Prompt de escolha (bright cyan)
+# Prompt de escolha
 echo -e "${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
 
