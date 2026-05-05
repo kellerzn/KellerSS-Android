@@ -17,35 +17,32 @@ echo -e "${CYAN}
  _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
-|_|\_ \___,_|_|_|\___/_ |   \____/_____
-${NC}${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+|_|\_ \___,_|_|_|\___/_ |   \____/_____ ${BRIGHT_CYAN}Coded By: KellerSS${NC}
+"
 
-echo ""
+# Menu Principal alinhado
+echo -e "${BLUE}╔══════════════════════════╗${NC}"
+echo -e "${BLUE}║      MENU PRINCIPAL      ║${NC}"
+echo -e "${BLUE}╚══════════════════════════╝${NC}"
 
-# Menu Principal alinhado com opções
-echo -e "${BLUE}  ╔══════════════════════════╗${NC}"
-echo -e "${BLUE}  ║      MENU PRINCIPAL      ║${NC}"
-echo -e "${BLUE}  ╚══════════════════════════╝${NC}"
+echo ""  # espaço
 
-echo ""
+# Status ADB alinhado com opções
+echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
 
-# ADB recuado para alinhar com opções
-echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
-
-# Espaço entre ADB e opções
-echo ""
+echo ""  # espaço
 
 # Opções
-echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
-echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
-echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
-echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
-echo -e "  ${RED}[S]${WHITE} Sair${NC}"
+echo -e "[0] Parear Dispositivo"
+echo -e "[1] Escanear FreeFire Normal"
+echo -e "[2] Escanear FreeFire Max"
+echo -e "[3] Salvar Dump"
+echo -e "[S] Sair"
 
-echo ""
+echo ""  # espaço antes da seta
 
-# Prompt de escolha com bright cyan
-echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
+# Prompt de escolha (bright cyan)
+echo -e "${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
 
 case $escolha in
