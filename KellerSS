@@ -56,7 +56,10 @@ echo ""
 # ========================
 echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""  # espaço abaixo do ADB
-
+# ========================
+# Espaço entre menu e ADB
+# ========================
+echo ""
 # ========================
 # Opções
 # ========================
