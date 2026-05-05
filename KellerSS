@@ -1,6 +1,4 @@
 #!/data/data/com.termux/files/usr/bin/bash
-
-# Limpa a tela
 clear
 
 # Cores
@@ -11,7 +9,7 @@ RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 PURPLE="\033[0;35m"
-NC="\033[0m" # Sem cor
+NC="\033[0m"
 
 # Título e Discord
 echo -e "${CYAN}KellerSS Android ${BLUE}Fucking Cheaters${NC}"
@@ -28,7 +26,7 @@ ${NC}"
 # Coded By
 echo -e "${CYAN}Coded By: KellerSS${NC}"
 
-# MENU PRINCIPAL ASCII
+# MENU PRINCIPAL
 echo -e "${PURPLE}
 ╔══════════════════════════╗
 ║      MENU PRINCIPAL      ║
@@ -47,5 +45,4 @@ echo -e "${RED}[S]${WHITE} Sair${NC}"
 
 # Seta
 echo -e "${CYAN}▸ Escolha uma das opções acima:${NC}"
-
-# Aqui você pode adicionar lógica futura para ler input do usuário
+read escolha
