@@ -1,58 +1,47 @@
-<?php
-echo '
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>KellerSS-Android</title>
-<style>
-body {
-    background-color: black;
-    font-family: monospace;
-    padding: 20px;
-    color: #00ffcc;
-    white-space: pre;
-    line-height: 1.1; /* diminui o espaço entre linhas */
- }
+#!/data/data/com.termux/files/usr/bin/bash
+clear
 
-.cyan { color: #00ffff; }
-.blue { color: #00bfff; }
-.white { color: #ffffff; }
-.red { color: #ff4444; }
-.yellow { color: #ffff00; }
-.green { color: #00ff00; }
-.purple { color: #A020F0; }
+# Cores ANSI
+CYAN="\033[0;36m"
+BLUE="\033[0;34m"
+WHITE="\033[1;37m"
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+MENU_BLUE="\033[0;94m"  # Azul forte para MENU PRINCIPAL
+NC="\033[0m"  # Sem cor
 
-.arrow { color: #00ffff; }
-</style>
-</head>
-<body>
+# Título e Discord
+echo -e "${CYAN}KellerSS Android ${BLUE}Fucking Cheaters${NC}"
+echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
-<div class="cyan">KellerSS Android <span class="blue">Fucking Cheaters</span>
-<div class="white">discord.gg/allianceoficial
-<pre class="cyan">
- _  __       _ _            ______ ______                 
+# ASCII Art
+echo -e "${CYAN}
+ _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
-|   < / _ ` | | |/ _ \   __| |__ \___  \
-|_|\_ \___,_|_|_|\___/_ |   \____/_____/ 
- 
-<div class="cyan">Coded By: KellerSS</div>
-<pre class="purple">
- ╔══════════════════════════╗
- ║      MENU PRINCIPAL      ║
- ╚══════════════════════════╝
-</pre>
-<div class="white">ADB:<span class="green"> ● Dispositivo conectado
+|   < / _ \ | |/ _ \   __| |__ \___  \\
+|_|\\_ \___,_|_|_|\\___/_ |   \\____/_____/
+${NC}"
 
-<span class="yellow">[0]</span> <span class="white">Parear Dispositivo</span>
-<span class="green">[1]</span> <span class="white">Escanear FreeFire Normal</span>
-<span class="green">[2]</span> <span class="white">Escanear FreeFire Max</span>
-<span class="green">[3]</span> <span class="white">Salvar Dump</span>
-<span class="red">[S]</span> <span class="white">Sair</span>
+# Coded By
+echo -e "${CYAN}Coded By: KellerSS${NC}"
 
- <div class="arrow">▸ Escolha uma das opções acima:</div>
+# MENU PRINCIPAL em azul forte
+echo -e "${MENU_BLUE}
+╔══════════════════════════╗
+║      MENU PRINCIPAL      ║
+╚══════════════════════════╝
+${NC}"
 
- </body>
- </html>
- ';
- ?>
+# ADB
+echo -e "${WHITE}ADB: ${GREEN}● Dispositivo conectado${NC}"
+
+# Opções
+echo -e "${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
+echo -e "${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
+echo -e "${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
+echo -e "${GREEN}[3]${WHITE} Salvar Dump${NC}"
+echo -e "${RED}[S]${WHITE} Sair${NC}"
+
+# Seta
+echo -e "${CYAN}▸ Escolha uma das opções acima:${NC}"
