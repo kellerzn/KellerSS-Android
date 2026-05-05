@@ -3,20 +3,19 @@
 # Autor: KellerSS
 # Compatível com Termux (Android)
 
-# Limpar tela
 clear
 
 # ========================
 # Cores ANSI
 # ========================
 CYAN="\033[0;36m"
-BRIGHT_CYAN="\033[1;36m"  # ciano mais claro / bright cyan
+BRIGHT_CYAN="\033[1;36m"
 BLUE="\033[0;34m"
 WHITE="\033[1;37m"
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
-NC="\033[0m"  # Sem cor
+NC="\033[0m"
 
 # ========================
 # Título e Discord
@@ -25,17 +24,22 @@ echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
 echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
 # ========================
-# ASCII Art colado com o "Coded By"
+# ASCII Art
 # ========================
 echo -e "${CYAN}
  _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
-|_|\_ \___,_|_|_|\___/_ |   \____/_____${BRIGHT_CYAN} Coded By: KellerSS${NC}
-"
+|_|\_ \___,_|_|_|\___/_ |   \____/_____
+${NC}"
 
 # ========================
-# Espaço acima do menu e ADB
+# Coded By colado na ASCII Art
+# ========================
+echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+
+# ========================
+# Espaço antes do menu
 # ========================
 echo ""
 
@@ -46,13 +50,11 @@ echo -e "${BLUE}      ╔══════════════════�
 echo -e "      ║      MENU PRINCIPAL      ║"
 echo -e "      ╚══════════════════════════╝${NC}"
 
-# ========================
 # Espaço entre menu e ADB
-# ========================
 echo ""
 
 # ========================
-# Status ADB (com espaço extra abaixo)
+# Status ADB
 # ========================
 echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""  # espaço abaixo do ADB
@@ -70,7 +72,7 @@ echo -e "  ${RED}[S]${WHITE} Sair${NC}"
 echo ""
 
 # ========================
-# Prompt de escolha (bright cyan / arrow)
+# Prompt de escolha (seta bright cyan)
 # ========================
 echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
