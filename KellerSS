@@ -1,82 +1,101 @@
 #!/data/data/com.termux/files/usr/bin/bash
+# Script: KellerSS-Android Termux
+# Autor: KellerSS
+# Compatível com Termux (Android)
+
+# Limpar tela
 clear
 
+# ========================
 # Cores ANSI
+# ========================
 CYAN="\033[0;36m"
-BRIGHT_CYAN="\033[1;36m"
+BRIGHT_CYAN="\033[1;36m"  # ciano mais claro / bright cyan
 BLUE="\033[0;34m"
 WHITE="\033[1;37m"
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
-NC="\033[0m"
+NC="\033[0m"  # Sem cor
 
-# Função para centralizar texto
-center() {
-    cols=$(tput cols)
-    printf "%*s\n" $(( (${#1} + cols) / 2 )) "$1"
-}
-
+# ========================
 # Título e Discord
-center "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
-center "${WHITE}discord.gg/allianceoficial${NC}"
+# ========================
+echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
+echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
+# ========================
+# ASCII Art colado com o "Coded By"
+# ========================
+echo -e "${CYAN}
+ _  __       _ _            ______ ______
+| |/ / ___ _| | | ___ _._|   ____/ ____|
+|   < / _ \ | |/ _ \   __| |__ \\\___  \\
+|_|\_ \___,_|_|_|\___/_ |   \____/_____${BRIGHT_CYAN} Coded By: KellerSS${NC}
+"
+
+# ========================
+# Espaço acima do menu e ADB
+# ========================
 echo ""
 
-# ASCII Art (cada linha centralizada)
-center "${CYAN} _  __       _ _            ______ ______${NC}"
-center "${CYAN}| |/ / ___ _| | | ___ _._|   ____/ ____|${NC}"
-center "${CYAN}|   < / _ \ | |/ _ \   __| |__ \\\___  \\${NC}"
-center "${CYAN}|_|\\_ \\___,_|_|_|\\___/_ |   \\____/_____/${NC}"
-
-# Coded By
-center "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
-
-echo ""
-
+# ========================
 # Menu Principal
-center "${BLUE}╔══════════════════════════╗${NC}"
-center "${BLUE}║      MENU PRINCIPAL      ║${NC}"
-center "${BLUE}╚══════════════════════════╝${NC}"
+# ========================
+echo -e "${BLUE}      ╔══════════════════════════╗"
+echo -e "      ║      MENU PRINCIPAL      ║"
+echo -e "      ╚══════════════════════════╝${NC}"
 
+# ========================
+# Espaço entre menu e ADB
+# ========================
 echo ""
 
-# Status ADB
-center "ADB: ${GREEN}● Dispositivo conectado${NC}"
+# ========================
+# Status ADB (com espaço extra abaixo)
+# ========================
+echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
+echo ""  # espaço abaixo do ADB
 
-echo ""
-
+# ========================
 # Opções
-center "[0] Parear Dispositivo"
-center "[1] Escanear FreeFire Normal"
-center "[2] Escanear FreeFire Max"
-center "[3] Salvar Dump"
-center "[S] Sair"
+# ========================
+echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
+echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
+echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
+echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
+echo -e "  ${RED}[S]${WHITE} Sair${NC}"
 
+# Linha em branco para empurrar o input pra baixo
 echo ""
 
-# Prompt de escolha
-center "${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
+# ========================
+# Prompt de escolha (bright cyan / arrow)
+# ========================
+echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
 
+# ========================
+# Lógica de escolha
+# ========================
 case $escolha in
     0)
-        center "${GREEN}Você escolheu: Parear Dispositivo${NC}"
+        echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}"
         ;;
     1)
-        center "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
+        echo -e "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
         ;;
     2)
-        center "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
+        echo -e "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
         ;;
     3)
-        center "${GREEN}Você escolheu: Salvar Dump${NC}"
+        echo -e "${GREEN}Você escolheu: Salvar Dump${NC}"
         ;;
     [Ss])
-        center "${RED}Saindo...${NC}"
+        echo -e "${RED}Saindo...${NC}"
         exit 0
         ;;
     *)
-        center "${RED}Opção inválida!${NC}"
+        echo -e "${RED}Opção inválida!${NC}"
         ;;
 esac
