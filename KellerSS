@@ -46,6 +46,6 @@ echo -e "${GREEN}[3]${WHITE} Salvar Dump${NC}"
 echo -e "${RED}[S]${WHITE} Sair${NC}"
 
 # Seta
-echo -e "${arrow}▸ Escolha uma das opções acima:${NC}"
+echo -e "${ARROW}▸ Escolha uma das opções acima:${NC}"
 
 # Aqui você pode adicionar lógica futura para ler input do usuário
