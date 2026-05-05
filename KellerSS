@@ -10,7 +10,7 @@ clear
 # Cores ANSI
 # ========================
 CYAN="\033[0;36m"
-BRIGHT_CYAN="\033[1;36m"  # ciano mais claro para a seta
+BRIGHT_CYAN="\033[1;36m"  # ciano mais claro / bright cyan
 BLUE="\033[0;34m"
 WHITE="\033[1;37m"
 RED="\033[0;31m"
@@ -21,23 +21,18 @@ NC="\033[0m"  # Sem cor
 # ========================
 # Título e Discord
 # ========================
-echo -e "${CYAN}KellerSS Android ${BLUE}Fucking Cheaters${NC}"
+echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
 echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
 # ========================
-# ASCII Art
+# ASCII Art colado com o "Coded By"
 # ========================
 echo -e "${CYAN}
  _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
-|_|\_ \___,_|_|_|\___/_ |   \____/_____/
-${NC}"
-
-# ========================
-# Autor
-# ========================
-echo -e "${CYAN}Coded By: KellerSS${NC}"
+|_|\_ \___,_|_|_|\___/_ |   \____/_____${BRIGHT_CYAN} Coded By: KellerSS${NC}
+"
 
 # ========================
 # Espaço acima do menu e ADB
@@ -57,9 +52,10 @@ echo -e "      ╚════════════════════�
 echo ""
 
 # ========================
-# Status ADB
+# Status ADB (com espaço extra abaixo)
 # ========================
 echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
+echo ""  # espaço abaixo do ADB
 
 # ========================
 # Opções
@@ -70,13 +66,11 @@ echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
 echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
 echo -e "  ${RED}[S]${WHITE} Sair${NC}"
 
-# ========================
 # Linha em branco para empurrar o input pra baixo
-# ========================
 echo ""
 
 # ========================
-# Prompt de escolha (seta em bright cyan)
+# Prompt de escolha (bright cyan / arrow)
 # ========================
 echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
