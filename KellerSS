@@ -31,7 +31,8 @@ echo -e "${CYAN}
  _  __       _ _            ______ ______
 | |/ / ___ _| | | ___ _._|   ____/ ____|
 |   < / _ \ | |/ _ \   __| |__ \\\___  \\
-|_|\_ \___,_|_|_|\___/_ |   \____/_____${BRIGHT_CYAN} Coded By: KellerSS${NC}
+|_|\_ \___,_|_|_|\___/_ |   \____/_____
+  ${BRIGHT_CYAN} Coded By: KellerSS${NC}
 "
 
 # ========================
@@ -54,7 +55,7 @@ echo ""
 # ========================
 # Status ADB (com espaço extra abaixo)
 # ========================
-echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
+echo -e   "ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""  # espaço abaixo do ADB
 # ========================
 # Espaço entre menu e ADB
