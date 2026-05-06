@@ -30,7 +30,7 @@ echo -e "${CYAN}"
 # ASCII Art linha por linha
 echo "  _  __       _ _           _____ ______"
 echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
-echo " l   < / _ ` l l l/ _ \ '__l l__ \___ \"
+echo " l   < / _ ` l l l/ _ \ '__l l__ \___"
 echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/"
 
 # Reseta cor
