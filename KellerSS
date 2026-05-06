@@ -41,7 +41,7 @@ echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/"
 echo -e "${NC}"
 
 
-echo -e "  ${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+echo -e "  ${CYAN}Coded By: KellerSS${NC}"
 
 echo ""
 echo ""
