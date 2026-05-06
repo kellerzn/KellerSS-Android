@@ -2,11 +2,8 @@
 
 # CORES
 CYAN="\033[0;36m"
-BRIGHT_CYAN="\033[1;36m"
 WHITE="\033[1;37m"
 GREEN="\033[0;32m"
-LIGHT_BLUE="\033[1;34m"
-RED="\033[0;31m"
 NC="\033[0m"
 
 scan_fake() {
@@ -24,20 +21,10 @@ scan_fake() {
     "Finalizando..."
     )
 
-    # tempos individuais (segundos)
     times=(30 30 300 30 30 30 30 30 30 30)
 
     total_steps=${#steps[@]}
     bar_size=20
-
-    tput civis  # esconder cursor
-
-    # desenha layout fixo (SEM PISCAR)
-    clear
-    echo ""
-    echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
-    echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-    echo ""
 
     ascii=(
 "  _  __       _ _           _____ ______"
@@ -46,16 +33,20 @@ scan_fake() {
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
     )
 
-    # imprime ascii base
+    tput civis
+    clear
+
+    echo ""
+    echo -e "  ${CYAN}KellerSS Android${NC}"
+    echo ""
+
+    # desenha ascii inicial
     for line in "${ascii[@]}"; do
         echo -e "${CYAN}${line}${NC}"
     done
 
-    echo -e "${CYAN}Coded By: KellerSS${NC}"
     echo ""
-
-    # linha da barra
-    bar_line=$(($(tput lines) - 15))
+    echo ""
 
     for ((i=0; i<total_steps; i++)); do
 
@@ -71,10 +62,13 @@ scan_fake() {
             percent=$((elapsed * 100 / step_time))
             filled=$((elapsed * bar_size / step_time))
 
-            # ASCII scan line (SEM PISCAR)
-            scan_line=$(( (elapsed*3) % 4 ))
+            # ========================
+            # ASCII SCAN LINE
+            # ========================
+            scan_line=$(( (elapsed*4) % 4 ))
+
             for j in {0..3}; do
-                tput cup $((4+j)) 2
+                tput cup $((2+j)) 2
                 if [ $j -eq $scan_line ]; then
                     echo -ne "\033[47m\033[30m${ascii[$j]}\033[0m"
                 else
@@ -82,8 +76,20 @@ scan_fake() {
                 fi
             done
 
-            # barra
-            tput cup 10 2
+            # ========================
+            # BOLINHAS LOOP (6)
+            # ========================
+            frames=(
+            "● ○ ○   ○ ○ ●"
+            "○ ● ○   ○ ● ○"
+            "○ ○ ●   ● ○ ○"
+            )
+
+            dots=${frames[$((elapsed % 3))]}
+
+            # ========================
+            # BARRA
+            # ========================
             bar="["
             for ((k=0;k<bar_size;k++)); do
                 if [ $k -lt $filled ]; then
@@ -94,20 +100,23 @@ scan_fake() {
             done
             bar+="]"
 
-            # timer
             printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
 
-            echo -ne "   ${CYAN}●●●${NC} $bar $time"
+            tput cup 7 2
+            echo -ne "${CYAN}${dots}${NC} $bar ${WHITE}$time${NC}   "
 
-            # lista
+            # ========================
+            # LISTA
+            # ========================
             for ((j=0; j<total_steps; j++)); do
-                tput cup $((12+j)) 2
+                tput cup $((9+j)) 2
+
                 if [ $j -lt $i ]; then
-                    echo -ne "${GREEN}✔ ${steps[j]}${NC}     "
+                    echo -ne "${GREEN}✔${NC} ${WHITE}${steps[j]}${NC}      "
                 elif [ $j -eq $i ]; then
-                    echo -ne "${LIGHT_BLUE}➜ ${steps[j]}${NC}     "
+                    echo -ne "${CYAN}➜${NC} ${WHITE}${steps[j]}${NC}      "
                 else
-                    echo -ne "${steps[j]}     "
+                    echo -ne "  ${WHITE}${steps[j]}${NC}      "
                 fi
             done
 
@@ -115,8 +124,8 @@ scan_fake() {
         done
     done
 
-    tput cnorm  # mostrar cursor
-    tput cup $((12+total_steps)) 2
+    tput cnorm
+    tput cup $((9+total_steps)) 2
     echo -e "${GREEN}✔ Scan concluído!${NC}"
     sleep 2
 }
@@ -124,39 +133,18 @@ scan_fake() {
 # MENU
 clear
 echo ""
-echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
-echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-
-echo -e "${CYAN}"
-echo "  _  __       _ _           _____ ______"
-echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
-echo " l   < / _ \ l l l/ _ \ '__l l__ \___"
-echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
-echo -e "${NC}"
-
-echo -e "  ${CYAN}Coded By: KellerSS${NC}"
+echo "  KellerSS Android"
 echo ""
+echo "  [1] Escanear"
+echo "  [S] Sair"
+echo ""
+read op
 
-echo -e "  ╔══════════════════════════╗"
-echo -e "  ║      MENU PRINCIPAL      ║"
-echo -e "  ╚══════════════════════════╝"
-echo ""
-echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
-echo ""
-echo -e "  ${YELLOW}[0] Parear Dispositivo"
-echo -e "  ${GREEN}[1] Escanear FreeFire Normal"
-echo -e "  ${GREEN}[2] Escanear FreeFire Max"
-echo -e "  ${GREEN}[3] Salvar Dump"
-echo -e "  ${RED}[S] Sair"
-echo ""
-echo -e "  ▸ Escolha:"
-read escolha
-
-case $escolha in
+case $op in
     1)
         scan_fake
         ;;
     *)
-        echo "Opção não implementada"
+        exit
         ;;
 esac
