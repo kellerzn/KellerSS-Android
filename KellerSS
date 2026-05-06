@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 # ========================
-# Cores ANSI
+# CORES
 # ========================
 CYAN="\033[0;36m"
 BRIGHT_CYAN="\033[1;36m"
@@ -18,8 +18,6 @@ NC="\033[0m"
 # ========================
 scan_fake() {
 
-    clear
-
     steps=(
     "Identificando aparelho e ambiente..."
     "Verificando integridade de logs..."
@@ -35,9 +33,8 @@ scan_fake() {
 
     total_steps=${#steps[@]}
     duration=30
-    start_time=$(date +%s)
-
     bar_size=30
+    start_time=$(date +%s)
 
     while true; do
 
@@ -52,14 +49,14 @@ scan_fake() {
         clear
 
         # ========================
-        # HEADER ORIGINAL
+        # HEADER
         # ========================
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
 
         # ========================
-        # ASCII COM SCAN LINE
+        # ASCII COM LINHA DESCENDO
         # ========================
         ascii=(
 "  _  __       _ _           _____ ______"
@@ -68,11 +65,10 @@ scan_fake() {
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
         )
 
-        scan_line=$((elapsed % ${#ascii[@]}))
-
+        scan_line=$((elapsed % 4))
         echo -e "${CYAN}"
         for i in "${!ascii[@]}"; do
-            if [ $i -eq $scan_line ]; then
+            if [ "$i" -eq "$scan_line" ]; then
                 echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
             else
                 echo "${ascii[$i]}"
@@ -84,11 +80,10 @@ scan_fake() {
         echo ""
 
         # ========================
-        # BOLINHAS VERTICAIS + BARRA
+        # BARRA FIXA + BOLINHAS
         # ========================
-        printf "   ${CYAN}●\033[0m   "
+        printf "   ${CYAN}●${NC}   "
 
-        # barra fixa
         bar="["
         for ((i=0;i<bar_size;i++)); do
             if [ $i -lt $filled ]; then
@@ -99,19 +94,16 @@ scan_fake() {
         done
         bar+="]"
 
-        # timer
         printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
-
         printf "%b   %3d%%  %s\n" "$bar" "$progress" "$time"
 
-        # bolinhas verticais (lado esquerdo)
-        printf "   ${CYAN}●\033[0m\n"
-        printf "   ${CYAN}●\033[0m\n"
-
+        # bolinhas restantes
+        printf "   ${CYAN}●${NC}\n"
+        printf "   ${CYAN}●${NC}\n"
         echo ""
 
         # ========================
-        # LISTA DE VERIFICAÇÕES
+        # VERIFICAÇÕES
         # ========================
         for ((j=0; j<total_steps; j++)); do
             if [ $j -lt $current_step ]; then
@@ -127,7 +119,7 @@ scan_fake() {
     done
 
     clear
-    echo -e "${GREEN}✔ Scan concluído!\033[0m"
+    echo -e "${GREEN}✔ Scan concluído com sucesso!${NC}"
     sleep 2
 }
 
@@ -153,17 +145,14 @@ echo ""
 echo -e "${LIGHT_BLUE}  ╔══════════════════════════╗"
 echo -e "  ║      MENU PRINCIPAL      ║"
 echo -e "  ╚══════════════════════════╝${NC}"
-
 echo ""
 echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""
-
 echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
 echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
 echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
 echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
 echo -e "  ${RED}[S]${WHITE} Sair${NC}"
-
 echo ""
 echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
