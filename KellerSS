@@ -42,7 +42,7 @@ echo -e "${NC}"
 echo -e "  ${BRIGHT_CYAN}Coded By: KellerSS${NC}"
 
 echo ""
-
+echo ""
 # ========================
 # Menu Principal
 # ========================
