@@ -37,63 +37,101 @@ scan_fake() {
 
     total_steps=${#steps[@]}
     duration=30
-    step_time=$((duration / total_steps))
+    start_time=$(date +%s)
 
-    for ((i=0; i<total_steps; i++)); do
-        for ((t=0; t<step_time; t++)); do
+    # cores barra (igual print)
+    colors=(
+    "\033[46m" "\033[47m" "\033[100m" "\033[43m"
+    "\033[42m" "\033[45m" "\033[44m"
+    )
 
-            clear
+    while true; do
 
-            # ========================
-            # SEU ASCII ORIGINAL (SEM ALTERAR)
-            # ========================
-            echo ""
-            echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}"
-            echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+        now=$(date +%s)
+        elapsed=$((now - start_time))
+        progress=$((elapsed * 100 / duration))
 
-            echo -e "${CYAN}"
-            echo "  _  __       _ _           _____ ______"
-            echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
-            echo " l   < / _ \ l l l/ _ \ '__l l__ \___"
-            echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
-            echo -e "${NC}"
+        [ $progress -gt 100 ] && break
 
-            echo -e "  ${CYAN}Coded By: KellerSS${NC}"
-            echo ""
+        current_step=$((progress * total_steps / 100))
 
-            # ========================
-            # BOLINHAS ANIMADAS
-            # ========================
-            dots=("● ● ●   ● ● ●" "● ○ ●   ● ○ ●" "○ ● ○   ○ ● ○")
-            dot=${dots[$((t % 3))]}
+        clear
 
-            # ========================
-            # PROGRESSO
-            # ========================
-            progress=$(( ( (i * step_time + t) * 100 ) / duration ))
-            bar=""
-            for ((b=0; b<progress/2; b++)); do bar+="█"; done
+        # ========================
+        # HEADER ORIGINAL
+        # ========================
+        echo ""
+        echo -e "  \033[1;36mKellerSS Android\033[0m \033[38;2;70;130;180mFucking Cheaters\033[0m"
+        echo -e "  \033[1;37mdiscord.gg/allianceoficial\033[0m"
 
-            printf "\n${LIGHT_BLUE}[%s] %3d%%${NC}\n" "$bar" "$progress"
-            echo -e "${CYAN}${dot}${NC}\n"
+        # ========================
+        # ASCII COM SCAN LINE
+        # ========================
+        ascii=(
+"  _  __       _ _           _____ ______"
+" l l/ / ___ _l l l ___ _ _l   __/ ____l"
+" l   < / _ \ l l l/ _ \ '__l l__ \___"
+" l_l\_ \___,_l_l_l\___/_l   \____/_____"
+        )
 
-            # ========================
-            # VERIFICAÇÕES
-            # ========================
-            for ((j=0; j<total_steps; j++)); do
-                if [ $j -lt $i ]; then
-                    echo -e "${GREEN}✔ ${steps[j]}${NC}"
-                elif [ $j -eq $i ]; then
-                    echo -e "${LIGHT_BLUE}➜ ${steps[j]}${NC}"
-                else
-                    echo -e "  ${steps[j]}"
-                fi
-            done
+        line=$((elapsed % ${#ascii[@]}))
 
-            sleep 1
+        echo -e "\033[0;36m"
+        for i in "${!ascii[@]}"; do
+            if [ $i -eq $line ]; then
+                echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
+            else
+                echo "${ascii[$i]}"
+            fi
         done
+        echo -e "\033[0m"
+
+        echo -e "  \033[0;36mCoded By: KellerSS\033[0m"
+        echo ""
+
+        # ========================
+        # BARRA COLORIDA
+        # ========================
+        blocks=$((progress / 10))
+        bar=""
+
+        for ((i=0;i<blocks;i++)); do
+            color=${colors[$((i % ${#colors[@]}))]}
+            bar+="${color} \033[0m"
+        done
+
+        # tempo formatado
+        printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
+
+        printf "  [%s] %d%%  %s  %d/%d\n" "$bar" "$progress" "$time" "$current_step" "$total_steps"
+
+        # ========================
+        # BOLINHAS LATERAIS
+        # ========================
+        dots=("● ○ ○   ○ ○ ●" "○ ● ○   ○ ● ○" "○ ○ ●   ● ○ ○")
+        echo -e "  \033[1;36m${dots[$((elapsed % 3))]}\033[0m"
+        echo ""
+
+        # ========================
+        # LISTA
+        # ========================
+        for ((j=0; j<total_steps; j++)); do
+            if [ $j -lt $current_step ]; then
+                echo -e "  \033[0;32m✔ ${steps[j]}\033[0m"
+            elif [ $j -eq $current_step ]; then
+                echo -e "  \033[1;34m➜ ${steps[j]}\033[0m"
+            else
+                echo -e "  ${steps[j]}"
+            fi
+        done
+
+        sleep 1
     done
 
+    clear
+    echo -e "\033[0;32m✔ Scan concluído!\033[0m"
+    sleep 2
+}
     clear
     echo -e "${GREEN}✔ Scan concluído com sucesso!${NC}"
     sleep 2
