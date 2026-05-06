@@ -96,13 +96,7 @@ case $escolha in
         ;;
 esac
 
-#!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux
-# Autor: KellerSS
-
-clear
-
-##!/bin/bash
+#!/bin/bash
 
 # ========================
 # Cores ANSI
@@ -157,7 +151,7 @@ spinner_index=0
 tput civis
 
 # ========================
-# Função de barra com efeito “transparente”
+# Função de barra
 # ========================
 draw_bar() {
     percent=$1
@@ -167,24 +161,24 @@ draw_bar() {
     filled=$(( BAR_SIZE * percent / 100 ))
     scanner_width=3
 
-    bar="["
+    bar="${WHITE}["
     for ((i=0;i<BAR_SIZE;i++)); do
         if [ $i -lt $filled ]; then
-            bar+="${LIGHT_CYAN}█${NC}"  # blocos preenchidos
+            bar+="${LIGHT_CYAN}█${NC}${WHITE}"
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}█${NC}"
+                    bar+="${LIGHT_GREEN}█${NC}${WHITE}"
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}█${NC}"
+                    bar+="${LIGHT_ORANGE}█${NC}${WHITE}"
                 fi
             else
-                bar+=" "  # <- fundo do terminal visível
+                bar+="${GRAY}░${NC}${WHITE}"
             fi
         fi
     done
-    bar+="]"
+    bar+="]${NC}"
     echo -ne "$bar $percent% $timer $completed/$TOTAL_ITEMS"
 }
 
@@ -194,10 +188,6 @@ draw_bar() {
 start_time=$(date +%s)
 highlight_index=0
 scanner_pos=0
-
-# Posição inicial do cursor
-tput clear
-tput cup 0 0
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
     for ((i=0;i<TOTAL_ITEMS;i++)); do
@@ -218,8 +208,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         seconds=$(( elapsed % 60 ))
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Volta para o topo do terminal
-        tput cup 0 0
+        clear
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
@@ -251,6 +240,26 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         ((elapsed_item++))
     done
 done
+
+# ========================
+# Scanner finalizado → parte 3 automática
+# ========================
+clear
+
+# ========================
+# Restaurar cursor
+# ========================
+tput cnorm
+
+CYAN="\033[1;36m"
+BOX_CYAN="\033[38;2;0;200;220m"
+RED="\033[0;31m"
+WHITE="\033[1;37m"
+BLACK_ON_RED="\033[30;48;2;255;0;0m"
+GREEN="\033[0;32m"
+ORANGE="\033[38;2;255;120;0m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
+NC="\033[0m"
 
 # ========================
 # Scanner finalizado → parte 3 automática
