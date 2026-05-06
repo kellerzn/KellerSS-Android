@@ -44,9 +44,9 @@ echo ""
 # ========================
 # Menu Principal
 # ========================
-echo -e "${BLUE}      ╔══════════════════════════╗"
-echo -e "      ║      MENU PRINCIPAL      ║"
-echo -e "      ╚══════════════════════════╝${NC}"
+echo -e "${BLUE}  ╔══════════════════════════╗"
+echo -e "  ║      MENU PRINCIPAL      ║"
+echo -e "  ╚══════════════════════════╝${NC}"
 
 # ========================
 # Espaço entre menu e ADB
@@ -56,7 +56,7 @@ echo ""
 # ========================
 # Status ADB (com espaço extra abaixo)
 # ========================
-echo -e "ADB: ${GREEN}● Dispositivo conectado${NC}"
+echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""  # espaço abaixo do ADB
 
 # ========================
