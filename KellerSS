@@ -102,6 +102,8 @@ esac
 
 clear
 
+#!/bin/bash
+
 # ========================
 # Cores ANSI
 # ========================
@@ -149,6 +151,14 @@ ascii_lines=(
 spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
+# ========================
+# Ocultar cursor
+# ========================
+tput civis
+
+# ========================
+# Função de barra
+# ========================
 draw_bar() {
     percent=$1
     completed=$2
@@ -170,7 +180,7 @@ draw_bar() {
                     bar+="${LIGHT_ORANGE}█${NC}${WHITE}"
                 fi
             else
-                bar+="${GRAY}░${NC}${WHITE}"
+                bar+="${NC} "  # <- transparente simulada
             fi
         fi
     done
@@ -241,7 +251,12 @@ done
 # Scanner finalizado → parte 3 automática
 # ========================
 clear
-# Aqui começa o conteúdo da Parte 3 direto
+
+# ========================
+# Restaurar cursor
+# ========================
+tput cnorm
+
 CYAN="\033[1;36m"
 BOX_CYAN="\033[38;2;0;200;220m"
 RED="\033[0;31m"
@@ -251,8 +266,6 @@ GREEN="\033[0;32m"
 ORANGE="\033[38;2;255;120;0m"
 AZUL_PERSONAL="\033[38;2;70;130;180m"
 NC="\033[0m"
-
-#!/data/data/com.termux/files/usr/bin/bash
 
 clear
 
