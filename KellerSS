@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+ #!/data/data/com.termux/files/usr/bin/bash
 # Script: KellerSS-Android Termux
 # Autor: KellerSS
 # Compatível com Termux (Android)
@@ -35,7 +35,7 @@ echo -e "${CYAN}"
 
 # ASCII Art linha por linha
 echo "  _  __      _ _           _____ ______     "
-echo " l l/ /___ _l l l ___ _ _l ____/ ____l     "
+echo " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
 echo " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
 echo " l_l\_\___,_l_l_l\___/_l   \____/_____/     "
 
@@ -141,7 +141,7 @@ done
 
 ascii_lines=(
 "  _  __      _ _           _____ ______     "
-" l l/ /___ _l l l ___ _ _l ____/ ____l     "
+" l l/ /___ _l l l ___ _ _l  ___/  ___l     "
 " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
 " l_l\_\___,_l_l_l\___/_l   \____/_____/     "
 )
@@ -283,7 +283,7 @@ echo ""
 # ========================
 echo -e "${CYAN}"
 echo "  _  __      _ _           _____ ______     "
-echo " l l/ /___ _l l l ___ _ _l ____/ ____l     "
+echo " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
 echo " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
 echo " l_l\_\___,_l_l_l\___/_l   \____/_____/     "
 echo -e "${NC}"
