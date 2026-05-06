@@ -87,6 +87,7 @@ read escolha
 case $escolha in
     0)
         echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}"
+        exit 0
         ;;
     1)
         echo -e "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
