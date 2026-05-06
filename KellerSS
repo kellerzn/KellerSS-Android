@@ -148,7 +148,7 @@ spinner_index=0
 # ========================
 # Ocultar cursor
 # ========================
-tput civis
+echo -ne "\e[?25l"
 
 # ========================
 # Função de barra
