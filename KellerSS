@@ -28,10 +28,10 @@ echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 # ASCII Art colado com o "Coded By"
 # ========================
 echo -e "${CYAN}
-echo -e " _  __       _ _            ______ ______"
-echo -e "| |/ / ___ _| | | ___ _ _|   ____/ ____|"
-echo -e "|   < / _ ` | | |/ _ \ "__| |__ \___ "
-echo -e "|_|\_ \___,_|_|_|\___/_|   \____/_____"
+echo -e "  _  __       _ _            ______ ______"
+echo -e " l l/ / ___ _l l l ___ _ _l   ____/ ____l"
+echo -e " l   < / _ ` l l l/ _ \ "__l l__ \___ "
+echo -e " l_l\_ \___,_l_l_l\___/_l   \____/_____"
 
 echo ""
 
