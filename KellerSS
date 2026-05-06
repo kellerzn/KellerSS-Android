@@ -1,7 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-clear
-
 # ========================
 # Cores ANSI
 # ========================
@@ -57,8 +55,8 @@ scan_fake() {
         # HEADER ORIGINAL
         # ========================
         echo ""
-        echo -e "  \033[1;36mKellerSS Android\033[0m \033[38;2;70;130;180mFucking Cheaters\033[0m"
-        echo -e "  \033[1;37mdiscord.gg/allianceoficial\033[0m"
+        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}"
+        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
 
         # ========================
         # ASCII COM SCAN LINE
@@ -72,7 +70,7 @@ scan_fake() {
 
         scan_line=$((elapsed % ${#ascii[@]}))
 
-        echo -e "\033[0;36m"
+        echo -e "${CYAN}"
         for i in "${!ascii[@]}"; do
             if [ $i -eq $scan_line ]; then
                 echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
@@ -80,18 +78,17 @@ scan_fake() {
                 echo "${ascii[$i]}"
             fi
         done
-        echo -e "\033[0m"
+        echo -e "${NC}"
 
-        echo -e "  \033[0;36mCoded By: KellerSS\033[0m"
+        echo -e "  ${CYAN}Coded By: KellerSS${NC}"
         echo ""
 
         # ========================
         # BOLINHAS VERTICAIS + BARRA
         # ========================
+        printf "   ${CYAN}●\033[0m   "
 
-        printf "   \033[1;36m●\033[0m   "
-        
-        # barra
+        # barra fixa
         bar="["
         for ((i=0;i<bar_size;i++)); do
             if [ $i -lt $filled ]; then
@@ -102,13 +99,14 @@ scan_fake() {
         done
         bar+="]"
 
-        # tempo formatado
+        # timer
         printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
 
         printf "%b   %3d%%  %s\n" "$bar" "$progress" "$time"
 
-        printf "   \033[1;36m●\033[0m\n"
-        printf "   \033[1;36m●\033[0m\n"
+        # bolinhas verticais (lado esquerdo)
+        printf "   ${CYAN}●\033[0m\n"
+        printf "   ${CYAN}●\033[0m\n"
 
         echo ""
 
@@ -117,9 +115,9 @@ scan_fake() {
         # ========================
         for ((j=0; j<total_steps; j++)); do
             if [ $j -lt $current_step ]; then
-                echo -e "  \033[0;32m✔ ${steps[j]}\033[0m"
+                echo -e "  ${GREEN}✔ ${steps[j]}${NC}"
             elif [ $j -eq $current_step ]; then
-                echo -e "  \033[1;34m➜ ${steps[j]}\033[0m"
+                echo -e "  ${LIGHT_BLUE}➜ ${steps[j]}${NC}"
             else
                 echo -e "  ${steps[j]}"
             fi
@@ -129,12 +127,14 @@ scan_fake() {
     done
 
     clear
-    echo -e "\033[0;32m✔ Scan concluído!\033[0m"
+    echo -e "${GREEN}✔ Scan concluído!\033[0m"
     sleep 2
 }
+
 # ========================
 # MENU PRINCIPAL
 # ========================
+clear
 
 echo ""
 echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}"
