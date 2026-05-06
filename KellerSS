@@ -68,8 +68,8 @@ scan_fake() {
                 echo -e "${CYAN}${ascii[$i]}${NC}"
             fi
         done
-
-        echo -e "${CYAN}Coded By: KellerSS${NC}"
+        echo ""
+        echo -e "  ${CYAN}Coded By: KellerSS${NC}"
         echo ""
 
         # BARRA + BOLINHAS
