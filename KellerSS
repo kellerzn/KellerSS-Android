@@ -39,20 +39,16 @@ scan_fake() {
     duration=30
     start_time=$(date +%s)
 
-    # cores barra (igual print)
-    colors=(
-    "\033[46m" "\033[47m" "\033[100m" "\033[43m"
-    "\033[42m" "\033[45m" "\033[44m"
-    )
+    bar_size=30
 
     while true; do
 
         now=$(date +%s)
         elapsed=$((now - start_time))
+        [ $elapsed -gt $duration ] && break
+
         progress=$((elapsed * 100 / duration))
-
-        [ $progress -gt 100 ] && break
-
+        filled=$((elapsed * bar_size / duration))
         current_step=$((progress * total_steps / 100))
 
         clear
@@ -74,11 +70,11 @@ scan_fake() {
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
         )
 
-        line=$((elapsed % ${#ascii[@]}))
+        scan_line=$((elapsed % ${#ascii[@]}))
 
         echo -e "\033[0;36m"
         for i in "${!ascii[@]}"; do
-            if [ $i -eq $line ]; then
+            if [ $i -eq $scan_line ]; then
                 echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
             else
                 echo "${ascii[$i]}"
@@ -90,30 +86,34 @@ scan_fake() {
         echo ""
 
         # ========================
-        # BARRA COLORIDA
+        # BOLINHAS VERTICAIS + BARRA
         # ========================
-        blocks=$((progress / 10))
-        bar=""
 
-        for ((i=0;i<blocks;i++)); do
-            color=${colors[$((i % ${#colors[@]}))]}
-            bar+="${color} \033[0m"
+        printf "   \033[1;36m●\033[0m   "
+        
+        # barra
+        bar="["
+        for ((i=0;i<bar_size;i++)); do
+            if [ $i -lt $filled ]; then
+                bar+="\033[46m \033[0m"
+            else
+                bar+=" "
+            fi
         done
+        bar+="]"
 
         # tempo formatado
         printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
 
-        printf "  [%s] %d%%  %s  %d/%d\n" "$bar" "$progress" "$time" "$current_step" "$total_steps"
+        printf "%b   %3d%%  %s\n" "$bar" "$progress" "$time"
 
-        # ========================
-        # BOLINHAS LATERAIS
-        # ========================
-        dots=("● ○ ○   ○ ○ ●" "○ ● ○   ○ ● ○" "○ ○ ●   ● ○ ○")
-        echo -e "  \033[1;36m${dots[$((elapsed % 3))]}\033[0m"
+        printf "   \033[1;36m●\033[0m\n"
+        printf "   \033[1;36m●\033[0m\n"
+
         echo ""
 
         # ========================
-        # LISTA
+        # LISTA DE VERIFICAÇÕES
         # ========================
         for ((j=0; j<total_steps; j++)); do
             if [ $j -lt $current_step ]; then
@@ -132,11 +132,6 @@ scan_fake() {
     echo -e "\033[0;32m✔ Scan concluído!\033[0m"
     sleep 2
 }
-    clear
-    echo -e "${GREEN}✔ Scan concluído com sucesso!${NC}"
-    sleep 2
-}
-
 # ========================
 # MENU PRINCIPAL
 # ========================
