@@ -92,7 +92,7 @@ case $escolha in
         exit 0
         ;;
     *)
-        echo -e "${RED}Opção inválida!${NC}     "
+        echo -e "${RED}Opção inválida!${NC}"
         ;;
 esac
 
