@@ -9,13 +9,12 @@ LIGHT_BLUE="\033[1;34m"
 RED="\033[0;31m"
 NC="\033[0m"
 
-# SCAN FAKE
 scan_fake() {
 
     steps=(
     "Identificando aparelho..."
     "Verificando integridade..."
-    "Checando root..."
+    "Verificando root..."
     "Checando uptime..."
     "Verificando clipboard..."
     "Analisando logs..."
@@ -25,10 +24,20 @@ scan_fake() {
     "Finalizando..."
     )
 
+    # tempos individuais (segundos)
+    times=(30 30 300 30 30 30 30 30 30 30)
+
     total_steps=${#steps[@]}
-    duration=30
-    bar_size=15
-    start_time=$(date +%s)
+    bar_size=20
+
+    tput civis  # esconder cursor
+
+    # desenha layout fixo (SEM PISCAR)
+    clear
+    echo ""
+    echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
+    echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+    echo ""
 
     ascii=(
 "  _  __       _ _           _____ ______"
@@ -37,83 +46,94 @@ scan_fake() {
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
     )
 
-    # Animacao ASCII independente
-    while true; do
-        now=$(date +%s)
-        elapsed=$((now - start_time))
-        [ $elapsed -gt $duration ] && break
-
-        progress=$((elapsed * 100 / duration))
-        filled=$((elapsed * bar_size / duration))
-        current_step=$((progress * total_steps / 100))
-
-        clear
-
-        # HEADER
-        echo ""
-        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
-        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-        echo ""
-
-        # ASCII com linha branca
-        scan_line=$(( (elapsed*4) % ${#ascii[@]} ))
-        for i in "${!ascii[@]}"; do
-            if [ "$i" -eq "$scan_line" ]; then
-                echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
-            else
-                echo -e "${CYAN}${ascii[$i]}${NC}"
-            fi
-        done
-
-        echo -e "${CYAN}Coded By: KellerSS${NC}"
-        echo ""
-
-        # BARRA + BOLINHAS + TIMER (mesma linha)
-        left_dots="${CYAN}●●●${NC}"
-        bar="["
-        for ((i=0;i<bar_size;i++)); do
-            if [ $i -lt $filled ]; then
-                bar+="\033[46m \033[0m"
-            else
-                bar+=" "
-            fi
-        done
-        bar+="]"
-        right_timer=$(printf "%02d:%02d" $((elapsed/60)) $((elapsed%60)))
-
-        # imprime a linha completa
-        printf "   %s %b %s\n\n" "$left_dots" "$bar" "$right_timer"
-
-        # LISTA DE VERIFICAÇÕES
-        for ((j=0; j<total_steps; j++)); do
-            if [ $j -lt $current_step ]; then
-                echo -e "  ${GREEN}✔ ${steps[j]}${NC}"
-            elif [ $j -eq $current_step ]; then
-                echo -e "  ${LIGHT_BLUE}➜ ${steps[j]}${NC}"
-            else
-                echo "  ${steps[j]}"
-            fi
-        done
-
-        sleep 0.2
+    # imprime ascii base
+    for line in "${ascii[@]}"; do
+        echo -e "${CYAN}${line}${NC}"
     done
 
-    clear
-    echo -e "${GREEN}✔ Scan concluído com sucesso!${NC}"
+    echo -e "${CYAN}Coded By: KellerSS${NC}"
+    echo ""
+
+    # linha da barra
+    bar_line=$(($(tput lines) - 15))
+
+    for ((i=0; i<total_steps; i++)); do
+
+        step_time=${times[$i]}
+        start=$(date +%s)
+
+        while true; do
+
+            now=$(date +%s)
+            elapsed=$((now - start))
+            [ $elapsed -ge $step_time ] && break
+
+            percent=$((elapsed * 100 / step_time))
+            filled=$((elapsed * bar_size / step_time))
+
+            # ASCII scan line (SEM PISCAR)
+            scan_line=$(( (elapsed*3) % 4 ))
+            for j in {0..3}; do
+                tput cup $((4+j)) 2
+                if [ $j -eq $scan_line ]; then
+                    echo -ne "\033[47m\033[30m${ascii[$j]}\033[0m"
+                else
+                    echo -ne "${CYAN}${ascii[$j]}${NC}"
+                fi
+            done
+
+            # barra
+            tput cup 10 2
+            bar="["
+            for ((k=0;k<bar_size;k++)); do
+                if [ $k -lt $filled ]; then
+                    bar+="\033[46m \033[0m"
+                else
+                    bar+=" "
+                fi
+            done
+            bar+="]"
+
+            # timer
+            printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
+
+            echo -ne "   ${CYAN}●●●${NC} $bar $time"
+
+            # lista
+            for ((j=0; j<total_steps; j++)); do
+                tput cup $((12+j)) 2
+                if [ $j -lt $i ]; then
+                    echo -ne "${GREEN}✔ ${steps[j]}${NC}     "
+                elif [ $j -eq $i ]; then
+                    echo -ne "${LIGHT_BLUE}➜ ${steps[j]}${NC}     "
+                else
+                    echo -ne "${steps[j]}     "
+                fi
+            done
+
+            sleep 0.1
+        done
+    done
+
+    tput cnorm  # mostrar cursor
+    tput cup $((12+total_steps)) 2
+    echo -e "${GREEN}✔ Scan concluído!${NC}"
     sleep 2
 }
 
-# MENU PRINCIPAL
+# MENU
 clear
 echo ""
 echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
 echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+
 echo -e "${CYAN}"
 echo "  _  __       _ _           _____ ______"
 echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
 echo " l   < / _ \ l l l/ _ \ '__l l__ \___"
 echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
 echo -e "${NC}"
+
 echo -e "  ${CYAN}Coded By: KellerSS${NC}"
 echo ""
 
@@ -123,34 +143,20 @@ echo -e "  ╚══════════════════════
 echo ""
 echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
 echo ""
-echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
-echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
-echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
-echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
-echo -e "  ${RED}[S]${WHITE} Sair${NC}"
+echo -e "  ${YELLOW}[0] Parear Dispositivo"
+echo -e "  ${GREEN}[1] Escanear FreeFire Normal"
+echo -e "  ${GREEN}[2] Escanear FreeFire Max"
+echo -e "  ${GREEN}[3] Salvar Dump"
+echo -e "  ${RED}[S] Sair"
 echo ""
-echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
+echo -e "  ▸ Escolha:"
 read escolha
 
 case $escolha in
-    0)
-        echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}"
-        ;;
     1)
-        clear
         scan_fake
         ;;
-    2)
-        echo -e "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
-        ;;
-    3)
-        echo -e "${GREEN}Você escolheu: Salvar Dump${NC}"
-        ;;
-    [Ss])
-        echo -e "${RED}Saindo...${NC}"
-        exit 0
-        ;;
     *)
-        echo -e "${RED}Opção inválida!${NC}"
+        echo "Opção não implementada"
         ;;
 esac
