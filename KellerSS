@@ -6,145 +6,67 @@ WHITE="\033[1;37m"
 GREEN="\033[0;32m"
 NC="\033[0m"
 
-scan_fake() {
-
-    steps=(
-    "Identificando aparelho..."
-    "Verificando integridade..."
-    "Verificando root..."
-    "Checando uptime..."
-    "Verificando clipboard..."
-    "Analisando logs..."
-    "Checando Wallhack..."
-    "Checando Shaders..."
-    "Checando OBB..."
-    "Finalizando..."
-    )
-
-    times=(30 30 300 30 30 30 30 30 30 30)
-
-    total_steps=${#steps[@]}
-    bar_size=20
-
-    ascii=(
+# ASCII para animação
+ascii=(
 "  _  __       _ _           _____ ______"
 " l l/ / ___ _l l l ___ _ _l   __/ ____l"
 " l   < / _ \ l l l/ _ \ '__l l__ \___"
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
+)
+
+bar_size=20
+tput civis  # esconde cursor
+
+start_total=$(date +%s)
+
+while true; do
+    now=$(date +%s)
+    elapsed=$((now - start_total))
+
+    # -------------------------------
+    # ASCII scan line
+    # -------------------------------
+    scan_line=$(( (elapsed*4) % ${#ascii[@]} ))
+    for i in "${!ascii[@]}"; do
+        if [ "$i" -eq "$scan_line" ]; then
+            echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
+        else
+            echo -e "${CYAN}${ascii[$i]}${NC}"
+        fi
+    done
+
+    echo ""
+
+
     )
+    dots=${frames[$((elapsed % 3))]}
 
-    tput civis
-    clear
-
-    echo ""
-    echo -e "  ${CYAN}KellerSS Android${NC}"
-    echo ""
-
-    # desenha ascii inicial
-    for line in "${ascii[@]}"; do
-        echo -e "${CYAN}${line}${NC}"
+    # -------------------------------
+    # Barra de progresso (enchendo gradualmente)
+    # -------------------------------
+    # Preenchimento cíclico apenas visual
+    filled=$(( (elapsed % (bar_size+1)) ))
+    bar="["
+    for ((k=0;k<bar_size;k++)); do
+        if [ $k -lt $filled ]; then
+            bar+="\033[46m \033[0m"
+        else
+            bar+=" "
+        fi
     done
+    bar+="]"
 
-    echo ""
-    echo ""
+    # Timer contínuo
+    printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
 
-    for ((i=0; i<total_steps; i++)); do
+    # Linha única: bolinhas | barra | timer
+    echo -e "${CYAN}${dots}${NC} $bar ${WHITE}${time}${NC}"
 
-        step_time=${times[$i]}
-        start=$(date +%s)
+    sleep 0.1
 
-        while true; do
+    # Limpa apenas a linha da barra antes de redesenhar
+    tput cuu 1
+    tput el
+done
 
-            now=$(date +%s)
-            elapsed=$((now - start))
-            [ $elapsed -ge $step_time ] && break
-
-            percent=$((elapsed * 100 / step_time))
-            filled=$((elapsed * bar_size / step_time))
-
-            # ========================
-            # ASCII SCAN LINE
-            # ========================
-            scan_line=$(( (elapsed*4) % 4 ))
-
-            for j in {0..3}; do
-                tput cup $((2+j)) 2
-                if [ $j -eq $scan_line ]; then
-                    echo -ne "\033[47m\033[30m${ascii[$j]}\033[0m"
-                else
-                    echo -ne "${CYAN}${ascii[$j]}${NC}"
-                fi
-            done
-
-            # ========================
-            # BOLINHAS LOOP (6)
-            # ========================
-            frames=(
-            "● ○ ○   ○ ○ ●"
-            "○ ● ○   ○ ● ○"
-            "○ ○ ●   ● ○ ○"
-            )
-
-            dots=${frames[$((elapsed % 3))]}
-
-            # ========================
-            # BARRA
-            # ========================
-            bar="["
-            for ((k=0;k<bar_size;k++)); do
-                if [ $k -lt $filled ]; then
-                    bar+="\033[46m \033[0m"
-                else
-                    bar+=" "
-                fi
-            done
-            bar+="]"
-
-            printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
-
-            tput cup 7 2
-            echo -ne "${CYAN}${dots}${NC} $bar ${WHITE}$time${NC}   "
-
-            # ========================
-            # LISTA
-            # ========================
-            for ((j=0; j<total_steps; j++)); do
-                tput cup $((9+j)) 2
-
-                if [ $j -lt $i ]; then
-                    echo -ne "${GREEN}✔${NC} ${WHITE}${steps[j]}${NC}      "
-                elif [ $j -eq $i ]; then
-                    echo -ne "${CYAN}➜${NC} ${WHITE}${steps[j]}${NC}      "
-                else
-                    echo -ne "  ${WHITE}${steps[j]}${NC}      "
-                fi
-            done
-
-            sleep 0.1
-        done
-    done
-
-    tput cnorm
-    tput cup $((9+total_steps)) 2
-    echo -e "${GREEN}✔ Scan concluído!${NC}"
-    sleep 2
-}
-
-# MENU
-clear
-echo ""
-echo "  KellerSS Android"
-echo ""
-echo "  [1] Escanear"
-echo "  [S] Sair"
-echo ""
-read op
-
-case $op in
-    1)
-        scan_fake
-        ;;
-    *)
-        exit
-        ;;
-esac
+tput cnorm
