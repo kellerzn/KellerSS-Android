@@ -24,16 +24,18 @@ NC="\033[0m"  # Sem cor
 echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
 echo -e "${WHITE}discord.gg/allianceoficial${NC}"
 
-# ========================
-# ASCII Art colado com o "Coded By"
-# ========================
-echo -e "${CYAN}
-echo -e "  _  __       _ _            ______ ______"
-echo -e " l l/ / ___ _l l l ___ _ _l   ____/ ____l"
-echo -e " l   < / _ ` l l l/ _ \ '__l l__ \___ "
-echo -e " l_l\_ \___,_l_l_l\___/_l   \____/_____"
+# Ativa cor ciano
+echo -e "${CYAN}"
 
-echo ""
+# ASCII Art linha por linha
+echo "  _  __       _ _            ______ ______"
+echo " l l/ / ___ _l l l ___ _ _l   ____/ ____l"
+echo " l   < / _ \ l l l/ _ \ '__l l__ \___ "
+echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
+
+# Reseta cor
+echo -e "${NC}"
+
 
 echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
 
