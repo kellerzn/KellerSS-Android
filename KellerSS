@@ -25,32 +25,32 @@ NC="\033[0m"  # Sem cor
 # ========================
 # Título e Discord
 # ========================
-echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}"
-echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${AZUL_PERSONAL}Fucking Cheaters${NC}     "
+echo -e "  ${WHITE}discord.gg/allianceoficial${NC}     "
 
 # Ativa cor ciano
 echo -e "${CYAN}"
 
 # ASCII Art linha por linha
-echo "  _  __       _ _           _____ ______"
-echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
-echo " l   < / _ \ l l l/ _ \ '__l l__ \___"
-echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/"
+echo "  _  __       _ _           _____ ______     "
+echo " l l/ / ___ _l l l ___ _ _l   __/ ____l     "
+echo " l   < / _ \ l l l/ _ \ '__l l__ \___     "
+echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/     "
 
 # Reseta cor
 echo -e "${NC}"
 
 
-echo -e "  ${CYAN}Coded By: KellerSS${NC}"
+echo -e "  ${CYAN}Coded By: KellerSS${NC}     "
 
 echo ""
 echo ""
 # ========================
 # Menu Principal
 # ========================
-echo -e "${LIGHT_BLUE}  ╔══════════════════════════╗"
-echo -e "  ║      MENU PRINCIPAL      ║"
-echo -e "  ╚══════════════════════════╝${NC}"
+echo -e "${LIGHT_BLUE}  ╔══════════════════════════╗     "
+echo -e "  ║      MENU PRINCIPAL      ║     "
+echo -e "  ╚══════════════════════════╝${NC}     "
 
 # ========================
 # Espaço entre menu e ADB
@@ -60,17 +60,17 @@ echo ""
 # ========================
 # Status ADB (com espaço extra abaixo)
 # ========================
-echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}"
+echo -e "  ADB: ${GREEN}● Dispositivo conectado${NC}     "
 echo ""  # espaço abaixo do ADB
 
 # ========================
 # Opções
 # ========================
-echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}"
-echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}"
-echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
-echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
-echo -e "  ${RED}[S]${WHITE} Sair${NC}"
+echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}     "
+echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}     "
+echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}     "
+echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}     "
+echo -e "  ${RED}[S]${WHITE} Sair${NC}     "
 
 # Linha em branco para empurrar o input pra baixo
 echo ""
@@ -78,7 +78,7 @@ echo ""
 # ========================
 # Prompt de escolha (bright cyan / arrow)
 # ========================
-echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
+echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}     "
 read escolha
 
 # ========================
@@ -86,23 +86,23 @@ read escolha
 # ========================
 case $escolha in
     0)
-        echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}"
+        echo -e "${GREEN}Você escolheu: Parear Dispositivo${NC}     "
         exit 0
         ;;
     1)
-        echo -e "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}"
+        echo -e "${GREEN}Você escolheu: Escanear FreeFire Normal${NC}     "
         ;;
     2)
-        echo -e "${GREEN}Você escolheu: Escanear FreeFire Max${NC}"
+        echo -e "${GREEN}Você escolheu: Escanear FreeFire Max${NC}     "
         ;;
     3)
-        echo -e "${GREEN}Você escolheu: Salvar Dump${NC}"
+        echo -e "${GREEN}Você escolheu: Salvar Dump${NC}     "
         ;;
     [Ss])
-        echo -e "${RED}Saindo...${NC}"
+        echo -e "${RED}Saindo...${NC}     "
         exit 0
         ;;
     *)
-        echo -e "${RED}Opção inválida!${NC}"
+        echo -e "${RED}Opção inválida!${NC}     "
         ;;
 esac
