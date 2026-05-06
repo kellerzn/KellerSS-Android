@@ -68,7 +68,7 @@ echo -e "  ${RED}[S]${WHITE} Sair${NC}     "
 echo ""
 
 # Prompt de escolha (bright cyan / arrow)
-echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}     "
+echo -ne "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}     "
 read escolha
 
 # Lógica de escolha
@@ -96,7 +96,11 @@ case $escolha in
         ;;
 esac
 
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
+# Scanner FreeFire Normal - KellerSS Android Termux
+# Autor: KellerSS
+
+clear
 
 # ========================
 # Cores ANSI
@@ -113,6 +117,11 @@ GRAY="\033[0;37m"
 NC="\033[0m"
 BRIGHT_CYAN="\033[1;36m"
 AZUL_PERSONAL="\033[38;2;70;130;180m"
+
+# ========================
+# Ocultar cursor
+# ========================
+echo -ne "\e[?25l"  # esconde o cursor de digitação
 
 # ========================
 # Configurações
@@ -145,14 +154,6 @@ ascii_lines=(
 spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
-# ========================
-# Ocultar cursor
-# ========================
-echo -ne "\e[?25l"
-
-# ========================
-# Função de barra
-# ========================
 draw_bar() {
     percent=$1
     completed=$2
@@ -241,36 +242,13 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
     done
 done
 
+sleep 3
+
 # ========================
 # Scanner finalizado → parte 3 automática
 # ========================
 clear
-
-# ========================
-# Restaurar cursor
-# ========================
-tput cnorm
-
-CYAN="\033[1;36m"
-BOX_CYAN="\033[38;2;0;200;220m"
-RED="\033[0;31m"
-WHITE="\033[1;37m"
-BLACK_ON_RED="\033[30;48;2;255;0;0m"
-GREEN="\033[0;32m"
-ORANGE="\033[38;2;255;120;0m"
-AZUL_PERSONAL="\033[38;2;70;130;180m"
-NC="\033[0m"
-
-# ========================
-# Scanner finalizado → parte 3 automática
-# ========================
-tput cup $((TOTAL_ITEMS + 10)) 0
-
-# ========================
-# Restaurar cursor
-# ========================
-tput cnorm
-
+# Aqui começa o conteúdo da Parte 3 direto
 CYAN="\033[1;36m"
 BOX_CYAN="\033[38;2;0;200;220m"
 RED="\033[0;31m"
