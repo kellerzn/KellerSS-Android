@@ -5,33 +5,33 @@
 # ========================
 CYAN="\033[0;36m"
 BRIGHT_CYAN="\033[1;36m"
-LIGHT_BLUE="\033[1;34m"
 WHITE="\033[1;37m"
-RED="\033[0;31m"
 GREEN="\033[0;32m"
+LIGHT_BLUE="\033[1;34m"
+RED="\033[0;31m"
 NC="\033[0m"
 
 # ========================
-# FUNÇÃO SCAN FAKE
+# SCAN FAKE COM ASCII "SCAN LINE"
 # ========================
 scan_fake() {
 
     steps=(
     "Identificando aparelho..."
     "Verificando integridade..."
-    "Verificando root..."
+    "Checando root..."
     "Checando uptime..."
     "Verificando clipboard..."
-    "Analisando MReplays..."
+    "Analisando logs..."
     "Checando Wallhack..."
     "Checando Shaders..."
     "Checando OBB..."
-    "Checando Optional..."
+    "Finalizando..."
     )
 
     total_steps=${#steps[@]}
-    duration=30       # tempo total do scan
-    bar_size=15       # barra menor e compacta
+    duration=30
+    bar_size=20
     start_time=$(date +%s)
 
     ascii=(
@@ -42,6 +42,7 @@ scan_fake() {
     )
 
     while true; do
+
         now=$(date +%s)
         elapsed=$((now - start_time))
         [ $elapsed -gt $duration ] && break
@@ -52,21 +53,17 @@ scan_fake() {
 
         clear
 
-        # ========================
         # HEADER
-        # ========================
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
         echo ""
 
-        # ========================
-        # ASCII COM LINHA BRANCA RÁPIDA
-        # ========================
-        scan_line=$(( (elapsed*2) % ${#ascii[@]} ))  # multiplica para ficar mais rápido
+        # ASCII COM LINHA BRANCA SCANNING
+        scan_line=$(( (elapsed * 4) % ${#ascii[@]} ))
         for i in "${!ascii[@]}"; do
             if [ "$i" -eq "$scan_line" ]; then
-                echo -e "\033[1;37m${ascii[$i]}\033[0m"  # linha branca
+                echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
             else
                 echo -e "${CYAN}${ascii[$i]}${NC}"
             fi
@@ -75,12 +72,10 @@ scan_fake() {
         echo -e "${CYAN}Coded By: KellerSS${NC}"
         echo ""
 
-        # ========================
-        # BARRA COM BOLINHAS
-        # ========================
-        printf "   ${CYAN}●\033[0m   "
+        # BARRA + BOLINHAS
+        printf "   ${CYAN}●${NC}   "
         bar="["
-        for ((i=0;i<bar_size;i++)); do
+        for ((i=0; i<bar_size; i++)); do
             if [ $i -lt $filled ]; then
                 bar+="\033[46m \033[0m"
             else
@@ -92,24 +87,21 @@ scan_fake() {
         printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
         printf "%b   %3d%%  %s\n" "$bar" "$progress" "$time"
 
-        printf "   ${CYAN}●\033[0m\n"
-        printf "   ${CYAN}●\033[0m\n"
-        echo ""
+        printf "   ${CYAN}●${NC}\n"
+        printf "   ${CYAN}●${NC}\n\n"
 
-        # ========================
-        # LISTA DE VERIFICAÇÕES
-        # ========================
+        # VERIFICAÇÕES
         for ((j=0; j<total_steps; j++)); do
             if [ $j -lt $current_step ]; then
                 echo -e "  ${GREEN}✔ ${steps[j]}${NC}"
             elif [ $j -eq $current_step ]; then
                 echo -e "  ${LIGHT_BLUE}➜ ${steps[j]}${NC}"
             else
-                echo -e "  ${steps[j]}"
+                echo "  ${steps[j]}"
             fi
         done
 
-        sleep 0.3  # velocidade da animação do ASCII
+        sleep 0.2
     done
 
     clear
@@ -121,21 +113,17 @@ scan_fake() {
 # MENU PRINCIPAL
 # ========================
 clear
-
 echo ""
 echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
 echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-
 echo -e "${CYAN}"
 echo "  _  __       _ _           _____ ______"
 echo " l l/ / ___ _l l l ___ _ _l   __/ ____l"
 echo " l   < / _ \ l l l/ _ \ '__l l__ \___"
 echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
 echo -e "${NC}"
-
 echo -e "  ${CYAN}Coded By: KellerSS${NC}"
 echo ""
-
 echo -e "  ╔══════════════════════════╗"
 echo -e "  ║      MENU PRINCIPAL      ║"
 echo -e "  ╚══════════════════════════╝"
@@ -148,7 +136,7 @@ echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}"
 echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}"
 echo -e "  ${RED}[S]${WHITE} Sair${NC}"
 echo ""
-echo -e "  ▸ Escolha uma das opções acima:"
+echo -e "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}"
 read escolha
 
 case $escolha in
