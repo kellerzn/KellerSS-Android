@@ -1,8 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# ========================
 # CORES
-# ========================
 CYAN="\033[0;36m"
 BRIGHT_CYAN="\033[1;36m"
 WHITE="\033[1;37m"
@@ -11,9 +9,7 @@ LIGHT_BLUE="\033[1;34m"
 RED="\033[0;31m"
 NC="\033[0m"
 
-# ========================
-# SCAN FAKE COM ASCII "SCAN LINE"
-# ========================
+# SCAN FAKE
 scan_fake() {
 
     steps=(
@@ -31,7 +27,7 @@ scan_fake() {
 
     total_steps=${#steps[@]}
     duration=30
-    bar_size=20
+    bar_size=15
     start_time=$(date +%s)
 
     ascii=(
@@ -41,8 +37,8 @@ scan_fake() {
 " l_l\_ \___,_l_l_l\___/_l   \____/_____"
     )
 
+    # Animacao ASCII independente
     while true; do
-
         now=$(date +%s)
         elapsed=$((now - start_time))
         [ $elapsed -gt $duration ] && break
@@ -59,8 +55,8 @@ scan_fake() {
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
         echo ""
 
-        # ASCII COM LINHA BRANCA SCANNING
-        scan_line=$(( (elapsed * 4) % ${#ascii[@]} ))
+        # ASCII com linha branca
+        scan_line=$(( (elapsed*4) % ${#ascii[@]} ))
         for i in "${!ascii[@]}"; do
             if [ "$i" -eq "$scan_line" ]; then
                 echo -e "\033[47m\033[30m${ascii[$i]}\033[0m"
@@ -68,14 +64,14 @@ scan_fake() {
                 echo -e "${CYAN}${ascii[$i]}${NC}"
             fi
         done
-        echo ""
-        echo -e "  ${CYAN}Coded By: KellerSS${NC}"
+
+        echo -e "${CYAN}Coded By: KellerSS${NC}"
         echo ""
 
-        # BARRA + BOLINHAS
-        printf "   ${CYAN}●${NC}   "
+        # BARRA + BOLINHAS + TIMER (mesma linha)
+        left_dots="${CYAN}●●●${NC}"
         bar="["
-        for ((i=0; i<bar_size; i++)); do
+        for ((i=0;i<bar_size;i++)); do
             if [ $i -lt $filled ]; then
                 bar+="\033[46m \033[0m"
             else
@@ -83,14 +79,12 @@ scan_fake() {
             fi
         done
         bar+="]"
+        right_timer=$(printf "%02d:%02d" $((elapsed/60)) $((elapsed%60)))
 
-        printf -v time "%02d:%02d" $((elapsed/60)) $((elapsed%60))
-        printf "%b   %3d%%  %s\n" "$bar" "$progress" "$time"
+        # imprime a linha completa
+        printf "   %s %b %s\n\n" "$left_dots" "$bar" "$right_timer"
 
-        printf "   ${CYAN}●${NC}\n"
-        printf "   ${CYAN}●${NC}\n\n"
-
-        # VERIFICAÇÕES
+        # LISTA DE VERIFICAÇÕES
         for ((j=0; j<total_steps; j++)); do
             if [ $j -lt $current_step ]; then
                 echo -e "  ${GREEN}✔ ${steps[j]}${NC}"
@@ -109,9 +103,7 @@ scan_fake() {
     sleep 2
 }
 
-# ========================
 # MENU PRINCIPAL
-# ========================
 clear
 echo ""
 echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${CYAN}Fucking Cheaters${NC}"
@@ -124,6 +116,7 @@ echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
 echo -e "${NC}"
 echo -e "  ${CYAN}Coded By: KellerSS${NC}"
 echo ""
+
 echo -e "  ╔══════════════════════════╗"
 echo -e "  ║      MENU PRINCIPAL      ║"
 echo -e "  ╚══════════════════════════╝"
