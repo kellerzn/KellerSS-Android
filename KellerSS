@@ -21,8 +21,8 @@ NC="\033[0m"  # Sem cor
 # ========================
 # Título e Discord
 # ========================
-echo -e "${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
-echo -e "${WHITE}discord.gg/allianceoficial${NC}"
+echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BLUE}Fucking Cheaters${NC}"
+echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
 
 # Ativa cor ciano
 echo -e "${CYAN}"
@@ -37,7 +37,7 @@ echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/"
 echo -e "${NC}"
 
 
-echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
+echo -e "  ${BRIGHT_CYAN}Coded By: KellerSS${NC}"
 
 echo ""
 
