@@ -31,7 +31,7 @@ echo -e "${CYAN}"
 echo "  _  __       _ _            ______ ______"
 echo " l l/ / ___ _l l l ___ _ _l   ____/ ____l"
 echo " l   < / _ \ l l l/ _ \ '__l l__ \___ "
-echo " l_l\_ \___,_l_l_l\___/_l   \____/_____"
+echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/"
 
 # Reseta cor
 echo -e "${NC}"
@@ -39,9 +39,6 @@ echo -e "${NC}"
 
 echo -e "${BRIGHT_CYAN}Coded By: KellerSS${NC}"
 
-# ========================
-# Espaço acima do menu e ADB
-# ========================
 echo ""
 
 # ========================
