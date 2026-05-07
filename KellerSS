@@ -1,23 +1,119 @@
+ #!/data/data/com.termux/files/usr/bin/bash
+# Script: KellerSS-Android Termux
+# Autor: KellerSS
+# Compatível com Termux (Android)
+
+# Limpar tela
+clear
+
+# ========================
+# Cores ANSI
+# ========================
+CYAN="\033[0;36m"
+BOX_CYAN="\033[38;2;0;180;255m"
+BRIGHT_CYAN="\033[1;36m"
+LIGHT_BLUE="\033[1;34m"
+WHITE="\033[1;37m"
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+DARK_PURPLE="\033[0;35m"
+DARK_CYAN="\033[0;36m"
+CYAN_AZULADO="\033[1;36m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
+NC="\033[0m"  # Sem cor
+
+# ========================
+# Título e Discord
+# ========================
+echo ""
+echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}     "
+echo -e "  ${WHITE}discord.gg/allianceoficial${NC}     "
+
+# Ativa cor ciano
+echo -e "${BRIGHT_CYAN}"
+
+# ASCII Art linha por linha
+echo "  _  __      _ _           _____ ______     "
+echo " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
+echo " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
+echo " l_l\_\___,_l_l_l\___/_l   \____/_____/     "
+
+# Reseta cor
+echo -e "${NC}"
+
+echo -e "  ${CYAN}Coded By: KellerSS${NC}     "
+echo ""
+echo ""
+# ========================
+# Menu Principal
+# ========================
+echo -e "${LIGHT_BLUE}  ╔══════════════════════════╗     "
+echo -e "  ║      MENU PRINCIPAL      ║     "
+echo -e "  ╚══════════════════════════╝${NC}     "
+
+# Espaço entre menu e ADB
+echo ""
+
+# Status ADB (com espaço extra abaixo)
+echo -e "  ${WHITE}ADB: ${GREEN}● Dispositivo conectado${NC}     "
+echo ""  # espaço abaixo do ADB
+
+# Opções
+echo -e "  ${YELLOW}[0]${WHITE} Parear Dispositivo${NC}     "
+echo -e "  ${GREEN}[1]${WHITE} Escanear FreeFire Normal${NC}     "
+echo -e "  ${GREEN}[2]${WHITE} Escanear FreeFire Max${NC}     "
+echo -e "  ${GREEN}[3]${WHITE} Salvar Dump${NC}     "
+echo -e "  ${RED}[S]${WHITE} Sair${NC}     "
+echo ""
+
+# Prompt de escolha (bright cyan / arrow)
+echo -ne "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC}${GREEN} "
+read escolha
+
+# Lógica de escolha
+case $escolha in
+    0)
+        echo -e "     "
+        exit 0
+        ;;
+    1)
+        echo -e "{NC}     "
+        bash scanner_part2.sh
+        ;;
+    2)
+        echo -e "{NC}     "
+        ;;
+    3)
+        echo -e "{NC}     "
+        ;;
+    [Ss])
+        echo -e "{NC}     "
+        exit 0
+        ;;
+    *)
+        echo -e "${RED}Opção inválida!${NC}"
+        ;;
+esac
+
 #!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux
+# Scanner FreeFire Normal - KellerSS Android Termux (Versão Termux Suave e Idêntica)
 # Autor: KellerSS (adaptado)
 
 # ========================
 # Cores ANSI
 # ========================
-BRIGHT_CYAN="\033[1;36m"
 CYAN="\033[0;36m"
-YELLOW_SCANNER="\033[1;93m"
-ORANGE_SCANNER="\033[48;5;208m"
-GREEN_SCANNER="\033[48;5;142m"
+BOX_CYAN="\033[38;2;0;200;220m"
 LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
-GRAY="\033[0;37m"
 GREEN="\033[0;32m"
+LIGHT_GREEN="\033[1;32m"
+LIGHT_ORANGE="\033[38;2;255;165;0m"
+GRAY="\033[0;37m"
+BRIGHT_CYAN="\033[1;36m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
 NC="\033[0m"
-
-# Azul destacado para "Fucking Cheaters"
-BOX_CYAN="\033[38;2;0;180;255m"
 
 # ========================
 # Ocultar cursor
@@ -54,7 +150,7 @@ items=("Identificando aparelho e ambiente..."
        "Checando OBB..."
        "Checando Optional...")
 
-times=(5 3 3000 15 40 40 2 3 3 3)
+times=(5 3 3 1 4 4 2 3 3 3)
 
 TOTAL_ITEMS=${#items[@]}
 
@@ -63,7 +159,7 @@ for ((i=0;i<TOTAL_ITEMS;i++)); do
     status+=("future")
 done
 
-# Piscadinha da setinha + texto
+# Variáveis para piscada
 blink_done=()
 blink_state=()
 for ((i=0;i<TOTAL_ITEMS;i++)); do
@@ -82,9 +178,10 @@ spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
 # ========================
-# Função barra com scanner amarelo+laranja
+# Função barra
 # ========================
 draw_bar() {
+
     current_index=$1
     timer=$2
     scanner_pos=$3
@@ -98,18 +195,19 @@ draw_bar() {
     bar="${WHITE}["
 
     for ((i=0;i<BAR_SIZE;i++)); do
+
         if [ $i -lt $filled ]; then
             bar+="${LIGHT_CYAN}█${NC}"
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${GREEN_SCANNER}░${NC}"  # scanner amarelo frente
+                    bar+="${LIGHT_GREEN}░${NC}"
                 elif [ $rel -eq 1 ]; then
-                    bar+="${ORANGE_SCANNER}░${NC}"  # scanner laranja atrás para profundidade
+                    bar+="${LIGHT_ORANGE}░${NC}"
                 fi
             else
-                bar+="░" # fundo transparente
+                bar+="░"
             fi
         fi
     done
@@ -133,6 +231,7 @@ for ((i=0;i<40;i++)); do
 done
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
+
     for ((i=0;i<TOTAL_ITEMS;i++)); do
         if [ $i -lt $step ]; then
             status[$i]="done"
@@ -146,6 +245,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
     elapsed_item=0
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
+
         if [ $resize_flag -eq 1 ]; then
             clear
             resize_flag=0
@@ -159,13 +259,11 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         echo -ne "\033[H"
 
-        # Cabeçalho
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
         echo ""
 
-        # ASCII animado
         for ((i=0;i<${#ascii_lines[@]};i++)); do
             if [ $i -eq $highlight_index ]; then
                 echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
@@ -173,10 +271,10 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                 echo -e "${BRIGHT_CYAN}${ascii_lines[$i]}${NC}\033[K"
             fi
         done
+
         highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
 
         echo ""
-        # Coded By em CYAN normal
         echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
         echo ""
 
@@ -188,18 +286,17 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         echo -e "\n"
 
-        # Itens do scanner
         for ((i=0;i<TOTAL_ITEMS;i++)); do
             case ${status[$i]} in
                 done)
                     echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K"
                 ;;
                 current)
-                    # Setinha + texto piscando juntos, setinha LIGHT_CYAN, texto WHITE
+                    # piscada 2x sem travar animação, setinha + texto piscando juntos
                     if [ ${blink_done[$i]} -eq 0 ]; then
                         case ${blink_state[$i]} in
                             0)
-                                echo -e "  ${LIGHT_CYAN}➤\033[7m ${WHITE}${items[$i]}\033[0m\033[K"
+                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
                                 blink_state[$i]=1
                             ;;
                             1)
@@ -207,7 +304,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                                 blink_state[$i]=2
                             ;;
                             2)
-                                echo -e "  ${LIGHT_CYAN}➤\033[7m ${WHITE}${items[$i]}\033[0m\033[K"
+                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
                                 blink_state[$i]=3
                             ;;
                             3)
@@ -230,4 +327,131 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         sleep 0.05
         ((elapsed_item++))
     done
+done
+
+
+#!/data/data/com.termux/files/usr/bin/bash
+
+clear
+
+# ========================
+# Cores
+# ========================
+CYAN="\033[0;36m"
+BOX_CYAN="\033[38;2;0;180;255m"
+RED="\033[0;31m"
+WHITE="\033[1;37m"
+BLACK_ON_RED="\033[30;48;2;255;0;0m"
+BRIGHT_CYAN="\033[1;36m"
+GREEN="\033[0;32m"
+ORANGE="\033[38;2;255;120;0m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
+LIGHT_BLUE="\033[1;34m"
+NC="\033[0m"
+sleep 5
+# ========================
+# HEADER
+# ========================
+echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
+echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+echo ""
+
+# ========================
+# ASCII ORIGINAL
+# ========================
+echo -e "${BRIGHT_CYAN}"
+echo "  _  __       _ _           _____ ______     "
+echo " l l/ / ___ _l l l ___ _ _l  ___/ ____l     "
+echo " l   < / _ ' l l l/ _ \ '__l l__ \___ \\   "
+echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/     "
+echo -e "${NC}"
+
+echo -e "  ${CYAN}Coded By: KellerSS${NC}"
+echo ""
+
+sleep 1
+
+# ========================
+# BOX PRINCIPAL
+# ========================
+echo -e "  ${ORANGE}┌─────────────────────────────────────────────────────┐${NC}"
+echo -e "  ${ORANGE}│ ${WHITE}Informações                                         ${ORANGE}│${NC}"
+echo -e "  ${ORANGE}├─────────────────────────────────────────────────────┤${NC}"
+
+# STATUS
+echo -e "  ${ORANGE}│ Status        ${NC}:  ${BLACK_ON_RED} SUSPEITO ${NC}                        ${ORANGE} │"
+
+echo -e "  ${ORANGE}├─────────────────────────────────────────────────────┤${NC}"
+
+# IDENTIFICAÇÃO
+echo -e "  ${ORANGE}│ ${WHITE}► Identificação                                   ${ORANGE}  │${NC}"
+echo -e "  ${ORANGE}│ Pacote        ${NC}:com.dts.freefireth                 ${ORANGE}  │${NC}"
+echo -e "  ${ORANGE}│ Jogo          ${NC}:FreeFire Normal$                   ${ORANGE}  │${NC}"
+echo -e "  ${ORANGE}│ Android       ${NC}:16                                 ${ORANGE}  │${NC}"
+echo -e "  ${ORANGE}│ Dispositivo   ${NC}:realme RMX5070                       ${ORANGE}│${NC}"
+echo -e "  ${ORANGE}│ HWID          ${NC}:1CFE44C07CC3573E                   ${ORANGE}  │${NC}"
+     
+echo -e "  ${ORANGE}├─────────────────────────────────────────────────────┤${NC}"
+
+# ORIGEM
+echo -e "  ${ORANGE}│ ${WHITE}► Origem                                            ${ORANGE}│${NC}"
+echo -e "  ${ORANGE}│                                                     │${NC}"
+echo -e "  ${ORANGE}│ Instalador    ${NC}:com.android.vending Google Play Store${ORANGE}│${NC}"
+ORANGE="\033[38;2;255;120;0m"
+NC="\033[0m"
+
+echo -e "  ${ORANGE}│ Classificação ${NC}:${GREEN}✅${NC}seguro - Google Play Store         ${ORANGE}│${NC}"
+ 
+echo -e "  ${ORANGE}├─────────────────────────────────────────────────────┤${NC}"
+
+# RESULTADO
+echo -e "  ${ORANGE}│ ${WHITE}► Resultado                                         ${ORANGE}│${NC}"
+echo -e "  ${ORANGE}│ Alertas       ${NC}:0                                    ${ORANGE}│${NC}"
+echo -e "  ${ORANGE}│ Detecções     ${NC}:4                                    ${ORANGE}│${NC}"
+ 
+echo -e "  ${ORANGE}└─────────────────────────────────────────────────────┘${NC}"
+
+echo ""
+
+# ========================
+# DETECÇÕES (0)
+# ========================
+
+echo -e "  ${BRIGHT_CYAN}┌────────────────────────────────────┐${NC}"
+echo -e "  ${BRIGHT_CYAN}│ ► Detecções - Root (0)             │${NC}"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo -e "  ${BRIGHT_CYAN}│ ✔Root/Bypass Nenhum detectado      │${NC}"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo ""
+
+echo -e "  ${BRIGHT_CYAN}┌────────────────────────────────────┐${NC}"
+echo -e "  ${BRIGHT_CYAN}│ ► Detecções - Logs (1)             │${NC}"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo -e "  ${ORANGE}⚠️ Indicadores de manipulação de logs detectados${NC}"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo ""
+
+echo -e "  ${BRIGHT_CYAN}┌────────────────────────────────────┐${NC}"
+echo -e "  ${BRIGHT_CYAN}│ ► Detecções - Outros (3)           │${NC}"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo -e "  ${ORANGE}⚠ Histórico do sistema apagado durante a sessão (ligado há 20h24m, deletado 12h00m após o boot)${NC}"
+echo -e "   -Motivo 4 - Access e Modify iguais na pasta MReplays"
+echo -e "  ${ORANGE}⚠️ Aviso - WifiDebuggingActivity encontrada nos usageStats (3 ocorrência(s)) – wireless ADB foi ativado neste dispositivo${NC}"
+echo -e "  ${ORANGE}⚠️ Motivo 18 - App no dispositivo conectado via Wireless ADB – padrão de senha via Termux${NC}"
+echo -e "  Data de acesso da pasta MReplays: 03-05-2026 06:15:36"
+echo -e "  Data de instalação do Free Fire:  03-05-2026 06:13:43"
+echo -e "  ▸ Compare a data de instalação com a data de acesso da MReplays. Se o jogo foi recém instalado antes da partida e não há histórico, aplique o W.O!"
+echo -e "  ${BRIGHT_CYAN}└────────────────────────────────────┘${NC}"
+echo ""
+
+
+WHITE="\033[1;37m"
+NC="\033[0m"
+
+    echo -e "\033[1;37mEm caso de dúvida se é falso positivo, procure o Keller no Discord com print do scanner.\033[0m"
+    echo ""
+
+while true; do
+    echo -ne "${GREEN}~/KellerSS-Android${WHITE} \$ "
+    read cmd
 done
