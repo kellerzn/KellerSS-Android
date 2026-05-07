@@ -150,7 +150,7 @@ items=("Identificando aparelho e ambiente..."
        "Checando OBB..."
        "Checando Optional...")
 
-times=(5 3 300 15 40 40 2 3 3 3)
+times=(5 3 3000 15 40 40 2 3 3 3)
 
 TOTAL_ITEMS=${#items[@]}
 
