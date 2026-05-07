@@ -10,14 +10,15 @@ CYAN="\033[0;36m"
 LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
 GRAY="\033[0;37m"
+GREEN="\033[0;32m"
 NC="\033[0m"
 
 # Azul destacado para "Fucking Cheaters"
 BOX_CYAN="\033[38;2;0;180;255m"
 
-# Barra: amarelo neon e laranja suave
-YELLOW_BAR="\033[38;2;255;255;128m"       # amarelo neon
-ORANGE_CLARO="\033[38;2;255;200;120m"     # laranja suave
+# Barra: verde e laranja claros
+GREEN_BAR="\033[38;2;0;255;0m"       # verde fixo
+ORANGE_CLARO="\033[38;2;255;200;120m" # laranja fixo
 
 # ========================
 # Ocultar cursor
@@ -63,7 +64,7 @@ for ((i=0;i<TOTAL_ITEMS;i++)); do
     status+=("future")
 done
 
-# Variáveis para piscada
+# Variáveis para piscada da setinha + texto
 blink_done=()
 blink_state=()
 for ((i=0;i<TOTAL_ITEMS;i++)); do
@@ -82,7 +83,7 @@ spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
 # ========================
-# Função barra com efeito scanner
+# Função barra com scanner fixo
 # ========================
 draw_bar() {
 
@@ -103,21 +104,12 @@ draw_bar() {
         if [ $i -lt $filled ]; then
             bar+="${LIGHT_CYAN}█${NC}"
         else
-            # Efeito scanner animado com brilho
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    if [ $((scanner_pos%2)) -eq 0 ]; then
-                        bar+="${YELLOW_BAR}\033[1m░${NC}"   # amarelo neon mais brilhante
-                    else
-                        bar+="${YELLOW_BAR}░${NC}"
-                    fi
+                    bar+="${GREEN_BAR}░${NC}"   # verde fixo
                 elif [ $rel -eq 1 ]; then
-                    if [ $((scanner_pos%2)) -eq 0 ]; then
-                        bar+="${ORANGE_CLARO}\033[1m░${NC}" # laranja suave mais brilhante
-                    else
-                        bar+="${ORANGE_CLARO}░${NC}"
-                    fi
+                    bar+="${ORANGE_CLARO}░${NC}" # laranja fixo
                 fi
             else
                 bar+="░"
@@ -172,8 +164,8 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         echo -ne "\033[H"
 
-        echo ""
         # Cabeçalho
+        echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
         echo ""
@@ -186,7 +178,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                 echo -e "${BRIGHT_CYAN}${ascii_lines[$i]}${NC}\033[K"
             fi
         done
-
         highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
 
         echo ""
@@ -209,10 +200,11 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                     echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K"
                 ;;
                 current)
+                    # Setinha + texto piscando juntos, setinha LIGHT_CYAN, texto WHITE
                     if [ ${blink_done[$i]} -eq 0 ]; then
                         case ${blink_state[$i]} in
                             0)
-                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
+                                echo -e "  ${LIGHT_CYAN}➤\033[7m ${WHITE}${items[$i]}\033[0m\033[K"
                                 blink_state[$i]=1
                             ;;
                             1)
@@ -220,7 +212,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                                 blink_state[$i]=2
                             ;;
                             2)
-                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
+                                echo -e "  ${LIGHT_CYAN}➤\033[7m ${WHITE}${items[$i]}\033[0m\033[K"
                                 blink_state[$i]=3
                             ;;
                             3)
