@@ -1,1 +1,228 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Scanner FreeFire Normal - KellerSS Android Termux
+# Versão estável para Termux Android
 
+# ========================
+# Configuração terminal
+# ========================
+
+# esconder cursor
+echo -ne "\e[?25l"
+
+# restaurar terminal ao sair
+cleanup() {
+    echo -ne "\e[?25h"
+    tput sgr0
+    clear
+}
+
+trap cleanup EXIT INT TERM
+
+# redesenhar ao redimensionar
+resize() {
+    clear
+}
+
+trap resize SIGWINCH
+
+# ========================
+# Cores ANSI
+# ========================
+
+CYAN="\033[1;36m"
+BOX_CYAN="\033[38;2;0;200;220m"
+LIGHT_CYAN="\033[1;96m"
+WHITE="\033[1;37m"
+GREEN="\033[0;32m"
+LIGHT_GREEN="\033[1;32m"
+LIGHT_ORANGE="\033[38;2;255;165;0m"
+GRAY="\033[0;37m"
+BRIGHT_CYAN="\033[1;36m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
+NC="\033[0m"
+
+# ========================
+# Configurações
+# ========================
+
+BAR_SIZE=20
+
+items=(
+"Identificando aparelho e ambiente..."
+"Verificando integridade de logs..."
+"Verificando root e ferramentas suspeitas..."
+"Verificando horário e uptime..."
+"Verificando ambiente e clipboard..."
+"Analisando MRplays..."
+"Checando bypass de Wallhack/Holograma..."
+"Checando Shaders..."
+"Checando OBB..."
+"Checando Optional..."
+)
+
+times=(5 3 3000 15 40 40 2 3 3 3)
+
+TOTAL_ITEMS=${#items[@]}
+
+status=()
+
+for ((i=0;i<TOTAL_ITEMS;i++)); do
+    status+=("future")
+done
+
+ascii_lines=(
+"  _  __      _ _           _____ ______     "
+" l l/ /___ _l l l ___ _ _l  ___/  ___l     "
+" l   </ _ ' l l l/ _ \ '__l l__ \___ \\\\   "
+" l_l\_\___,_l_l_l\___/_l   \____/_____/     "
+)
+
+spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
+spinner_index=0
+
+# ========================
+# Barra
+# ========================
+
+draw_bar() {
+
+    percent=$1
+    completed=$2
+    timer=$3
+    scanner_pos=$4
+
+    filled=$(( BAR_SIZE * percent / 100 ))
+    scanner_width=3
+
+    bar="${WHITE}["
+
+    for ((i=0;i<BAR_SIZE;i++)); do
+
+        if [ $i -lt $filled ]; then
+
+            bar+="${LIGHT_CYAN}█${NC}${WHITE}"
+
+        else
+
+            rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
+
+            if [ $rel -lt $scanner_width ]; then
+
+                if [ $rel -eq 0 ] || [ $rel -eq 2 ]; then
+                    bar+="${LIGHT_GREEN}░${NC}"
+
+                elif [ $rel -eq 1 ]; then
+                    bar+="${LIGHT_ORANGE}░${NC}"
+                fi
+
+            else
+                bar+="░"
+            fi
+        fi
+    done
+
+    bar+="]${NC}"
+
+    echo -ne "$bar $percent% $timer $completed/$TOTAL_ITEMS"
+}
+
+# ========================
+# Loop principal
+# ========================
+
+start_time=$(date +%s)
+highlight_index=0
+scanner_pos=0
+
+clear
+
+for ((step=0; step<TOTAL_ITEMS; step++)); do
+
+    for ((i=0;i<TOTAL_ITEMS;i++)); do
+
+        if [ $i -lt $step ]; then
+            status[$i]="done"
+
+        elif [ $i -eq $step ]; then
+            status[$i]="current"
+
+        else
+            status[$i]="future"
+        fi
+    done
+
+    elapsed_item=0
+
+    while [ $elapsed_item -lt ${times[$step]} ]; do
+
+        current_time=$(date +%s)
+
+        elapsed=$(( current_time - start_time ))
+
+        minutes=$(( elapsed / 60 ))
+        seconds=$(( elapsed % 60 ))
+
+        timer=$(printf "%02d:%02d" $minutes $seconds)
+
+        # mover cursor pro topo
+        tput cup 0 0
+
+        # limpar da posição atual até fim da tela
+        tput ed
+
+        echo ""
+        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
+        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+        echo ""
+
+        for ((i=0;i<${#ascii_lines[@]};i++)); do
+
+            if [ $i -eq $highlight_index ]; then
+                echo -e "${WHITE}${ascii_lines[$i]}${NC}"
+            else
+                echo -e "${CYAN}${ascii_lines[$i]}${NC}"
+            fi
+        done
+
+        highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
+
+        echo ""
+        echo -e "${CYAN}  Coded By: KellerSS${NC}"
+        echo ""
+
+        echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
+
+        draw_bar $((step*100/TOTAL_ITEMS)) $step $timer $scanner_pos
+
+        spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
+
+        echo -e "\n"
+
+        for ((i=0;i<TOTAL_ITEMS;i++)); do
+
+            case ${status[$i]} in
+
+                done)
+                    echo -e "  ${GREEN}✔${NC} ${items[$i]}"
+                ;;
+
+                current)
+                    echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}"
+                ;;
+
+                future)
+                    echo -e "  ${GRAY}•${NC} ${items[$i]}"
+                ;;
+
+            esac
+        done
+
+        scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
+
+        sleep 0.05
+
+        ((elapsed_item++))
+    done
+done
+
+cleanup
