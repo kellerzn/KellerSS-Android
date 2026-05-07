@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux (Versão Termux Suave e Idêntica)
+# Scanner FreeFire Normal - KellerSS Android Termux (Versão Final Ajustada)
 # Autor: KellerSS (adaptado)
 
 # ========================
@@ -20,7 +20,7 @@ NC="\033[0m"
 # ========================
 # Ocultar cursor
 # ========================
-echo -ne "\e[?25l"  # esconde o cursor
+echo -ne "\e[?25l"
 
 # ========================
 # Configurações
@@ -67,17 +67,19 @@ draw_bar() {
     bar="${WHITE}["
     for ((i=0;i<BAR_SIZE;i++)); do
         if [ $i -lt $filled ]; then
-            bar+="${LIGHT_CYAN}█${NC}${WHITE}"
+            bar+="${LIGHT_CYAN}█${NC}${WHITE}"  # barra azul clara preenchida
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
+                # scanner translúcido sem rastro branco
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}░${NC}"      # translúcido
+                    bar+="${LIGHT_GREEN}░${NC}"   # verde translúcido
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}░${NC}"     # translúcido laranja
+                    bar+="${LIGHT_ORANGE}░${NC}"  # laranja translúcido
                 fi
             else
-                bar+="░"  # bloco de fundo “transparente”
+                # fundo da barra translúcido
+                bar+="░"
             fi
         fi
     done
@@ -92,11 +94,9 @@ start_time=$(date +%s)
 highlight_index=0
 scanner_pos=0
 
-# Pré-preencher tela para evitar scroll
-clear
-for ((i=0;i<40;i++)); do
-    echo ""
-done
+# limpa tela inicial
+tput clear
+echo -ne "\033[H"
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
     for ((i=0;i<TOTAL_ITEMS;i++)); do
@@ -117,9 +117,10 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         seconds=$(( elapsed % 60 ))
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Move cursor para topo sem limpar tudo (evita piscamento)
-        echo -ne "\033[H"
+        # move cursor para topo e limpa até o final da tela (evita duplicação)
+        echo -ne "\033[H\033[J"
 
+        # cabeçalho e ASCII
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
@@ -135,10 +136,14 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         echo ""
         echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
         echo ""
+
+        # spinner + barra
         echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
         draw_bar $((step*100/TOTAL_ITEMS)) $step $timer $scanner_pos
         spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
         echo -e "\n"
+
+        # itens
         for ((i=0;i<TOTAL_ITEMS;i++)); do
             case ${status[$i]} in
                 done) echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K" ;;
@@ -146,6 +151,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                 future) echo -e "  ${GRAY}•${NC} ${items[$i]}\033[K" ;;
             esac
         done
+
         scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
         sleep 0.05
         ((elapsed_item++))
