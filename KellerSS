@@ -19,10 +19,6 @@ NC="\033[0m"
 # Azul destacado para "Fucking Cheaters"
 BOX_CYAN="\033[38;2;0;180;255m"
 
-# Scanner cores
-YELLOW_SCANNER="\033[38;2;255;255;128m"  # amarelo claro
-ORANGE_SCANNER="\033[38;2;255;200;120m"  # laranja suave atrás para profundidade
-
 # ========================
 # Ocultar cursor
 # ========================
