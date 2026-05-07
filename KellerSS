@@ -71,14 +71,14 @@ draw_bar() {
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
-                # scanner translúcido sem rastro branco
+                # scanner translúcido (blocos laranja/verde)
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}░${NC}"   # verde translúcido
+                    bar+="${LIGHT_GREEN}░${NC}"
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}░${NC}"  # laranja translúcido
+                    bar+="${LIGHT_ORANGE}░${NC}"
                 fi
             else
-                # fundo da barra translúcido
+                # fundo da barra não recebe rastro (transparente)
                 bar+="░"
             fi
         fi
