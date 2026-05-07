@@ -90,7 +90,8 @@ draw_bar() {
 
         if [ $i -lt $filled ]; then
 
-            bar+="${LIGHT_CYAN}█${NC}${WHITE}"
+            # removido rastro branco
+            bar+="${LIGHT_CYAN}█${NC}"
 
         else
 
@@ -148,9 +149,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
-        # ========================
-        # Limpa SOMENTE ao redimensionar
-        # ========================
+        # limpa somente ao redimensionar
         if [ $resize_flag -eq 1 ]; then
             clear
             resize_flag=0
