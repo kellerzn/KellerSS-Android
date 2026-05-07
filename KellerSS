@@ -9,16 +9,15 @@ BRIGHT_CYAN="\033[1;36m"
 CYAN="\033[0;36m"
 LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
-GREEN="\033[0;32m"
 GRAY="\033[0;37m"
 NC="\033[0m"
 
 # Azul destacado para "Fucking Cheaters"
 BOX_CYAN="\033[38;2;0;180;255m"
 
-# Barra: amarelo e laranja suave
-YELLOW_BAR="\033[38;2;212;176;0m"    # amarelo/mostarda
-ORANGE_CLARO="\033[38;2;255;184;77m" # laranja claro
+# Barra: amarelo neon e laranja suave
+YELLOW_BAR="\033[38;2;255;255;128m"       # amarelo neon
+ORANGE_CLARO="\033[38;2;255;200;120m"     # laranja suave
 
 # ========================
 # Ocultar cursor
@@ -83,7 +82,7 @@ spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
 # ========================
-# Função barra
+# Função barra com efeito scanner
 # ========================
 draw_bar() {
 
@@ -104,12 +103,21 @@ draw_bar() {
         if [ $i -lt $filled ]; then
             bar+="${LIGHT_CYAN}█${NC}"
         else
+            # Efeito scanner animado com brilho
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${YELLOW_BAR}░${NC}"
+                    if [ $((scanner_pos%2)) -eq 0 ]; then
+                        bar+="${YELLOW_BAR}\033[1m░${NC}"   # amarelo neon mais brilhante
+                    else
+                        bar+="${YELLOW_BAR}░${NC}"
+                    fi
                 elif [ $rel -eq 1 ]; then
-                    bar+="${ORANGE_CLARO}░${NC}"
+                    if [ $((scanner_pos%2)) -eq 0 ]; then
+                        bar+="${ORANGE_CLARO}\033[1m░${NC}" # laranja suave mais brilhante
+                    else
+                        bar+="${ORANGE_CLARO}░${NC}"
+                    fi
                 fi
             else
                 bar+="░"
@@ -165,16 +173,12 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         echo -ne "\033[H"
 
         echo ""
-        # ========================
         # Cabeçalho
-        # ========================
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
         echo ""
 
-        # ========================
         # ASCII animado
-        # ========================
         for ((i=0;i<${#ascii_lines[@]};i++)); do
             if [ $i -eq $highlight_index ]; then
                 echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
@@ -186,9 +190,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
 
         echo ""
-        # ========================
         # Coded By em CYAN normal
-        # ========================
         echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
         echo ""
 
@@ -200,9 +202,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         echo -e "\n"
 
-        # ========================
         # Itens do scanner
-        # ========================
         for ((i=0;i<TOTAL_ITEMS;i++)); do
             case ${status[$i]} in
                 done)
