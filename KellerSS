@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux (Versão Final Ajustada)
+# Scanner FreeFire Normal - KellerSS Android Termux (Versão Termux Suave e Idêntica)
 # Autor: KellerSS (adaptado)
 
 # ========================
@@ -11,15 +11,16 @@ LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
 GREEN="\033[0;32m"
 LIGHT_GREEN="\033[1;32m"
-LIGHT_ORANGE="\033[38;2;255;165;0m"
+LIGHT_ORANGE="\033[38;2;255;165;0m"  # Laranja verdadeiro (RGB)
 GRAY="\033[0;37m"
 BRIGHT_CYAN="\033[1;36m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
 NC="\033[0m"
 
 # ========================
 # Ocultar cursor
 # ========================
-echo -ne "\e[?25l"
+echo -ne "\e[?25l"  # esconde o cursor
 
 # ========================
 # Configurações
@@ -66,17 +67,17 @@ draw_bar() {
     bar="${WHITE}["
     for ((i=0;i<BAR_SIZE;i++)); do
         if [ $i -lt $filled ]; then
-            bar+="${LIGHT_CYAN}█${NC}${WHITE}"  # azul preenchida
+            bar+="${LIGHT_CYAN}█${NC}${WHITE}"
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}░${NC}"   # verde translúcido
+                    bar+="${LIGHT_GREEN}░${NC}"      # translúcido
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}░${NC}"  # laranja translúcido
+                    bar+="${LIGHT_ORANGE}░${NC}"     # translúcido laranja
                 fi
             else
-                bar+="░"  # fundo da barra translúcido
+                bar+="░"  # bloco de fundo “transparente”
             fi
         fi
     done
@@ -90,6 +91,12 @@ draw_bar() {
 start_time=$(date +%s)
 highlight_index=0
 scanner_pos=0
+
+# Pré-preencher tela para evitar scroll
+clear
+for ((i=0;i<40;i++)); do
+    echo ""
+done
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
     for ((i=0;i<TOTAL_ITEMS;i++)); do
@@ -110,45 +117,35 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         seconds=$(( elapsed % 60 ))
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # ========================
-        # Limpa tela toda (permitindo ajuste natural do Termux)
-        # ========================
-        clear
+        # Move cursor para topo sem limpar tudo (evita piscamento)
+        echo -ne "\033[H"
+
         echo ""
-        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
-        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
+        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
         echo ""
         for ((i=0;i<${#ascii_lines[@]};i++)); do
             if [ $i -eq $highlight_index ]; then
-                echo -e "${WHITE}${ascii_lines[$i]}${NC}"
+                echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
             else
-                echo -e "${CYAN}${ascii_lines[$i]}${NC}"
+                echo -e "${CYAN}${ascii_lines[$i]}${NC}\033[K"
             fi
         done
         highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
         echo ""
-        echo -e "${CYAN}  Coded By: KellerSS${NC}"
+        echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
         echo ""
-
-        # ========================
-        # Spinner + barra
-        # ========================
         echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
         draw_bar $((step*100/TOTAL_ITEMS)) $step $timer $scanner_pos
         spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
         echo -e "\n"
-
-        # ========================
-        # Itens
-        # ========================
         for ((i=0;i<TOTAL_ITEMS;i++)); do
             case ${status[$i]} in
-                done) echo -e "  ${GREEN}✔${NC} ${items[$i]}" ;;
-                current) echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}" ;;
-                future) echo -e "  ${GRAY}•${NC} ${items[$i]}" ;;
+                done) echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K" ;;
+                current) echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}\033[K" ;;
+                future) echo -e "  ${GRAY}•${NC} ${items[$i]}\033[K" ;;
             esac
         done
-
         scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
         sleep 0.05
         ((elapsed_item++))
@@ -156,6 +153,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 done
 
 # ========================
-# Mostrar cursor novamente
+# Mostrar cursor novamente no final
 # ========================
 echo -ne "\e[?25h"
