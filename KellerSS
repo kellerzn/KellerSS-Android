@@ -1,11 +1,12 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux (Versão Termux Suave e Idêntica)
+# Scanner FreeFire Normal - KellerSS Android Termux
 # Autor: KellerSS (adaptado)
 
 # ========================
 # Cores ANSI
 # ========================
 BRIGHT_CYAN="\033[1;36m"
+CYAN="\033[0;36m"
 LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
 GREEN="\033[0;32m"
@@ -15,9 +16,9 @@ NC="\033[0m"
 # Azul destacado para "Fucking Cheaters"
 BOX_CYAN="\033[38;2;0;180;255m"
 
-# Verde mato e laranja suave para a barra
-GREEN_MATO="\033[38;2;46;204;64m"
-ORANGE_CLARO="\033[38;2;255;184;77m"
+# Barra: amarelo e laranja suave
+YELLOW_BAR="\033[38;2;212;176;0m"    # amarelo/mostarda
+ORANGE_CLARO="\033[38;2;255;184;77m" # laranja claro
 
 # ========================
 # Ocultar cursor
@@ -106,7 +107,7 @@ draw_bar() {
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${GREEN_MATO}░${NC}"
+                    bar+="${YELLOW_BAR}░${NC}"
                 elif [ $rel -eq 1 ]; then
                     bar+="${ORANGE_CLARO}░${NC}"
                 fi
@@ -165,14 +166,14 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         echo ""
         # ========================
-        # Cabeçalho com cores ajustadas
+        # Cabeçalho
         # ========================
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
         echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
         echo ""
 
         # ========================
-        # ASCII animado, BRIGHT_CYAN base
+        # ASCII animado
         # ========================
         for ((i=0;i<${#ascii_lines[@]};i++)); do
             if [ $i -eq $highlight_index ]; then
@@ -185,7 +186,10 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
 
         echo ""
-        echo -e "${BRIGHT_CYAN}  Coded By: KellerSS${NC}\033[K"
+        # ========================
+        # Coded By em CYAN normal
+        # ========================
+        echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
         echo ""
 
         echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
