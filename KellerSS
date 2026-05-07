@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Scanner FreeFire Normal - KellerSS Android Termux (Versão Final Definitiva)
+# Scanner FreeFire Normal - KellerSS Android Termux (Versão Final Ajustada)
 # Autor: KellerSS (adaptado)
 
 # ========================
@@ -63,24 +63,24 @@ draw_bar() {
     filled=$(( BAR_SIZE * percent / 100 ))
     scanner_width=3
 
-    bar="["
+    bar="${WHITE}["
     for ((i=0;i<BAR_SIZE;i++)); do
         if [ $i -lt $filled ]; then
-            bar+="${LIGHT_CYAN}█${NC}"  # barra azul clara preenchida
+            bar+="${LIGHT_CYAN}█${NC}${WHITE}"  # azul preenchida
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}░${NC}"
+                    bar+="${LIGHT_GREEN}░${NC}"   # verde translúcido
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}░${NC}"
+                    bar+="${LIGHT_ORANGE}░${NC}"  # laranja translúcido
                 fi
             else
-                bar+="░"
+                bar+="░"  # fundo da barra translúcido
             fi
         fi
     done
-    bar+="]"
+    bar+="]${NC}"
     echo -ne "$bar $percent% $timer $completed/$TOTAL_ITEMS"
 }
 
@@ -91,29 +91,6 @@ start_time=$(date +%s)
 highlight_index=0
 scanner_pos=0
 
-# ========================
-# Desenha cabeçalho fixo apenas uma vez
-# ========================
-tput clear
-echo ""
-echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
-echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-echo ""
-for ((i=0;i<${#ascii_lines[@]};i++)); do
-    if [ $i -eq $highlight_index ]; then
-        echo -e "${WHITE}${ascii_lines[$i]}${NC}"
-    else
-        echo -e "${CYAN}${ascii_lines[$i]}${NC}"
-    fi
-done
-highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
-echo ""
-echo -e "${CYAN}  Coded By: KellerSS${NC}"
-echo ""
-
-# ========================
-# Loop principal de animação
-# ========================
 for ((step=0; step<TOTAL_ITEMS; step++)); do
     for ((i=0;i<TOTAL_ITEMS;i++)); do
         if [ $i -lt $step ]; then
@@ -134,25 +111,44 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
         # ========================
-        # Atualiza a barra e itens sem limpar toda a tela
+        # Limpa tela toda (permitindo ajuste natural do Termux)
         # ========================
-        tput sc  # salva cursor
-        tput cup $((8 + ${#ascii_lines[@]} + 1)) 0  # posiciona cursor no início da barra e spinner
+        clear
+        echo ""
+        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
+        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
+        echo ""
+        for ((i=0;i<${#ascii_lines[@]};i++)); do
+            if [ $i -eq $highlight_index ]; then
+                echo -e "${WHITE}${ascii_lines[$i]}${NC}"
+            else
+                echo -e "${CYAN}${ascii_lines[$i]}${NC}"
+            fi
+        done
+        highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
+        echo ""
+        echo -e "${CYAN}  Coded By: KellerSS${NC}"
+        echo ""
+
+        # ========================
+        # Spinner + barra
+        # ========================
         echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
         draw_bar $((step*100/TOTAL_ITEMS)) $step $timer $scanner_pos
+        spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
         echo -e "\n"
 
+        # ========================
+        # Itens
+        # ========================
         for ((i=0;i<TOTAL_ITEMS;i++)); do
-            tput el  # limpa linha
             case ${status[$i]} in
                 done) echo -e "  ${GREEN}✔${NC} ${items[$i]}" ;;
                 current) echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}" ;;
                 future) echo -e "  ${GRAY}•${NC} ${items[$i]}" ;;
             esac
         done
-        tput rc  # restaura cursor para próxima atualização
 
-        spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
         scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
         sleep 0.05
         ((elapsed_item++))
@@ -160,6 +156,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 done
 
 # ========================
-# Mostrar cursor novamente no final
+# Mostrar cursor novamente
 # ========================
 echo -ne "\e[?25h"
