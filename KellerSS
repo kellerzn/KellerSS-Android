@@ -173,7 +173,7 @@ echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/     "
 echo -e "${NC}"
 
 echo -e "  ${CYAN}Coded By: KellerSS${NC}"
-
+sleep 1
 echo ""
 echo -e "  ${ORANGE}⚠ Nenhum dispositivo conectado — prosseguindo para reconexão manual.${NC}"
 
