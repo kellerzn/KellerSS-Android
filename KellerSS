@@ -99,6 +99,7 @@ draw_bar() {
 
         if [ $i -lt $filled ]; then
 
+            # removido rastro branco
             if [ $percent -ge 90 ]; then
                 bar+="${LIGHT_GREEN}█${NC}"
             else
@@ -137,13 +138,9 @@ highlight_index=0
 scanner_pos=0
 display_percent=0
 
-# ========================
 # Pré-preencher tela
-# ========================
 clear
-LINES=$(tput lines)
-
-for ((i=0;i<LINES;i++)); do
+for ((i=0;i<40;i++)); do
     echo ""
 done
 
@@ -166,10 +163,9 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
-        # Ajusta somente ao redimensionar
+        # limpa somente ao redimensionar
         if [ $resize_flag -eq 1 ]; then
-            tput cup 0 0
-            tput ed
+            clear
             resize_flag=0
         fi
 
@@ -182,8 +178,8 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Move cursor para topo sem limpar
-        tput cup 0 0
+        # Move cursor para topo sem limpar tudo
+        echo -ne "\033[H"
 
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
