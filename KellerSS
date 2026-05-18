@@ -18,7 +18,7 @@ RED="\033[0;31m"
 NC="\033[0m"
 
 # ========================
-# BANNER
+# Banner
 # ========================
 
 echo ""
@@ -41,12 +41,13 @@ echo -e "  ${ORANGE}⚠ Nenhum dispositivo conectado — prosseguindo para recon
 
 echo ""
 echo -e "  ${BRIGHT_CYAN}┌─RECONEXÃO${NC}"
-echo -e "   ${YELLOW}Depuração sem fio → Parear com código${NC}"
+echo -e "   ${YELLOW}Abra: Configurações → Opções do Desenvolvedor → Depuração sem fio${NC}"
+echo -e "   ${YELLOW}Toque em \"Parear com código de pareamento\" e anote a PORTA e o CÓDIGO.${NC}"
 
 echo ""
 
 # ========================
-# PAREAMENTO
+# PAREAMENTO (REAL ADB)
 # ========================
 
 echo -ne "  ${BRIGHT_CYAN}▸ Porta de pareamento (ex: 37241):${NC}${GREEN} "
@@ -68,11 +69,13 @@ else
 fi
 
 echo ""
-echo -e "  ${YELLOW}Volte à tela de Depuração sem fio${NC}"
+echo -e "  ${YELLOW}Volte à tela principal de \"Depuração sem fio\".${NC}"
+echo -e "  ${YELLOW}Anote a PORTA mostrada ao lado do endereço IP.${NC}"
+
 echo ""
 
 # ========================
-# CONEXÃO
+# CONEXÃO (REAL ADB)
 # ========================
 
 echo -ne "  ${BRIGHT_CYAN}▸ Porta de conexão (ex: 43210):${NC}${GREEN} "
@@ -83,9 +86,7 @@ echo -e "  ${DARK_PURPLE}→ Conectando...${NC}"
 
 connect_result=$(adb connect 127.0.0.1:$porta_conexao 2>&1)
 
-# ========================
-# OUTPUT MODIFICADO (LOCALHOST VISUAL)
-# ========================
+echo "  $connect_result"
 
 if echo "$connect_result" | grep -qi "connected"; then
     echo -e "  ${GREEN}✔ Dispositivo conectado! connected to localhost:$porta_conexao${NC}"
