@@ -182,9 +182,8 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Move cursor para topo
+        # Move cursor para topo sem limpar
         tput cup 0 0
-        tput ed
 
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
