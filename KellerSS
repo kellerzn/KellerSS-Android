@@ -227,7 +227,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
 
-        sleep 0.03
+        sleep 0.02
         ((elapsed_item++))
     done
 done
