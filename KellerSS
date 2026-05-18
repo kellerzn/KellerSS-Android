@@ -11,10 +11,11 @@ LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
 GREEN="\033[0;32m"
 LIGHT_GREEN="\033[1;32m"
-LIGHT_ORANGE="\033[38;2;255;165;0m"
+ORANGE="\033[38;2;255;140;26m"
 GRAY="\033[0;37m"
 BRIGHT_CYAN="\033[1;36m"
 AZUL_PERSONAL="\033[38;2;70;130;180m"
+YELLOW="\033[38;2;255;255;85m"
 NC="\033[0m"
 
 # ========================
@@ -110,10 +111,10 @@ fi
             if [ $rel -lt $scanner_width ]; then
 
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${LIGHT_GREEN}░${NC}"
+                    bar+="${YELLOW}░${NC}"
 
                 elif [ $rel -eq 1 ]; then
-                    bar+="${LIGHT_ORANGE}░${NC}"
+                    bar+="${ORANGE}░${NC}"
                 fi
 
             else
