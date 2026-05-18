@@ -86,11 +86,14 @@ echo -e "  ${DARK_PURPLE}→ Conectando...${NC}"
 
 connect_result=$(adb connect localhost:$porta_conexao 2>&1)
 
+# mostra exatamente a linha do adb
+echo "  $connect_result"
+
+# mensagem bonita por cima
 if echo "$connect_result" | grep -qi "connected"; then
-    echo -e "  ${GREEN}✔ Dispositivo conectado! ${NC}"
+    echo -e "  ${GREEN}✔ Dispositivo conectado!${NC}"
 else
     echo -e "  ${RED}✖ Falha na conexão${NC}"
-    echo "  $connect_result"
 fi
 
 echo ""
