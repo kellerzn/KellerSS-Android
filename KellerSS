@@ -93,7 +93,7 @@ echo "  ${clean_result//already /}"
 
 # mensagem bonita por cima
 if echo "$connect_result" | grep -qi "connected"; then
-    echo -e "  ${GREEN}✔ Dispositivo conectado!${NC}"
+    echo -e "  ${GREEN}✔ Dispositivo conectado! Use as opções [1] ou [2] para iniciar o scan. ${NC}"
 else
     echo -e "  ${RED}✖ Falha na conexão${NC}"
 fi
