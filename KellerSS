@@ -85,14 +85,17 @@ echo -e "  ${LIGHT_BLUE}→ Conectando...${NC}"
 
 connect_result=$(adb connect localhost:$porta_conexao 2>&1)
 
+# remove "already " da mensagem
+connect_result=$(echo "$connect_result" | sed 's/already //g')
+
 # mostra exatamente a linha do adb
 echo "  $connect_result"
 
-# mensagem bonita por cima
+# mensagem bonita
 if echo "$connect_result" | grep -qi "connected"; then
-    echo -e "  ${GREEN}✔ Dispositivo conectado!${NC}"
+    echo -e "  ${GREEN}✔ Dispositivo conectado! Use as opções [1] ou [2] para iniciar o scan.${NC}"
 else
-    echo -e "  ${RED}✖ Falha na conexão${NC}"
+    echo -e "  ${RED}✖ Falha na conexão.${NC}"
 fi
 
 echo ""
