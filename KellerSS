@@ -5,7 +5,7 @@ clear
 # ========================
 # Cores ANSI
 # ========================
-
+CYAN_LOGO="\033[38;2;0;255;255m"
 CYAN="\033[0;36m"
 BOX_CYAN="\033[38;2;0;180;255m"
 BRIGHT_CYAN="\033[1;36m"
@@ -27,7 +27,7 @@ echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
 
 echo ""
 
-echo -e "${BRIGHT_CYAN}"
+echo -e "${CYAN_LOGO}"
 echo "  _  __      _ _           _____ ______     "
 echo " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
 echo " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
