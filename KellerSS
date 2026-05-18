@@ -80,18 +80,16 @@ echo ""
 # ========================
 # Prompt
 # ========================
-echo -ne "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC} ${GREEN}"
-read escolha
+while true; do
 
-# ========================
-# Lógica
-# ========================
-case $escolha in
+    echo -ne "  ${BRIGHT_CYAN}▸ Escolha uma das opções acima:${NC} ${GREEN}"
+    read escolha
+
+    case $escolha in
 
     0)
-        clear
-        echo ""
-        ;;
+    break
+    ;;
 
     1|2|3)
     echo ""
@@ -126,7 +124,17 @@ case $escolha in
         echo -ne "${GREEN}~${WHITE} \$ "
     read
         ;;
+
+        *)
+            echo -e "  ${RED}✗ Opção inválida! Tente novamente.${NC}"
+            echo ""
+            ;;
+
 esac
+
+done
+
+
 
 #!/data/data/com.termux/files/usr/bin/bash
 
@@ -444,9 +452,9 @@ draw_bar() {
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
-                    bar+="${YELLOW}░${NC}"
+                    bar+="${YELLOW}▒${NC}"
                 else
-                    bar+="${ORANGE}░${NC}"
+                    bar+="${ORANGE}▓${NC}"
                 fi
             else
                 bar+="░"
