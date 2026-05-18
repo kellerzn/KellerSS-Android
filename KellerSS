@@ -1,104 +1,248 @@
 #!/data/data/com.termux/files/usr/bin/bash
-
-clear
+# Scanner FreeFire Normal - KellerSS Android Termux (Versão Termux Suave e Idêntica)
+# Autor: KellerSS (adaptado)
 
 # ========================
 # Cores ANSI
 # ========================
-CYAN_LOGO="\033[38;2;0;255;255m"
 CYAN="\033[0;36m"
 BOX_CYAN="\033[38;2;0;180;255m"
-BRIGHT_CYAN="\033[1;36m"
-ORANGE="\033[38;2;255;140;26m"
+LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
-GREEN="\033[38;2;0;255;85m"
-YELLOW="\033[38;2;255;255;85m"
-LIGHT_BLUE="\033[1;34m"
-RED="\033[0;31m"
+GREEN="\033[0;32m"
+LIGHT_GREEN="\033[1;32m"
+LIGHT_ORANGE="\033[38;2;255;165;0m"
+GRAY="\033[0;37m"
+BRIGHT_CYAN="\033[1;36m"
+AZUL_PERSONAL="\033[38;2;70;130;180m"
 NC="\033[0m"
 
 # ========================
-# Banner
+# Ocultar cursor
 # ========================
-
-echo ""
-echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}"
-echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
-
-echo ""
-
-echo -e "${CYAN_LOGO}"
-echo "  _  __      _ _           _____ ______     "
-echo " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
-echo " l   </ _ ' l l l/ _ \ '__l l__ \___ \\   "
-echo " l_l\_\___,_l_l_l\___/_l   \____/_____/     "
-echo -e "${NC}"
-
-echo -e "  ${CYAN}Coded By: KellerSS${NC}"
-
-echo ""
-echo -e "  ${ORANGE}⚠ Nenhum dispositivo conectado — prosseguindo para reconexão manual.${NC}"
-
-echo -e "  ${BRIGHT_CYAN}┌─RECONEXÃO${NC}"
-echo -e "    ${YELLOW}Abra: Configurações → Opções do Desenvolvedor → Depuração sem fio${NC}"
-echo -e "    ${YELLOW}Toque em \"Parear com código de pareamento\" e anote a PORTA e o CÓDIGO.${NC}"
-
-echo ""
+echo -ne "\e[?25l"
 
 # ========================
-# PAREAMENTO (REAL ADB)
+# Corrigir duplicação ao mudar resolução
 # ========================
+resize_flag=0
+trap 'resize_flag=1' SIGWINCH
 
-echo -ne "  ${BRIGHT_CYAN}▸ Porta de pareamento (ex: 37241):${NC}${GREEN} "
-read porta
+# ========================
+# Restaurar terminal ao sair
+# ========================
+cleanup() {
+    echo -ne "\e[?25h"
+}
+trap cleanup EXIT INT TERM
 
-echo -ne "  ${BRIGHT_CYAN}▸ Código de pareamento (6 dígitos):${NC}${GREEN} "
-read codigo
+# ========================
+# Configurações
+# ========================
+BAR_SIZE=20
 
-echo ""
-echo -e "  ${LIGHT_BLUE}→ Pareando...${NC}"
+items=("Identificando aparelho e ambiente..."
+       "Verificando integridade de logs..."
+       "Verificando root e ferramentas suspeitas..."
+       "Verificando horário e uptime..."
+       "Verificando ambiente e clipboard..."
+       "Analisando MRplays..."
+       "Checando silenciamento de logcat..."
+       "Checando manipulação de bateria..."
+       "Checando bypass de Wallhack/Holograma..."
+       "Checando Shaders..."
+       "Checando OBB..."
+       "Checando Optional..."
+       "Concluindo verificação de logcat de replay...")
 
-pair_result=$(adb pair 127.0.0.1:$porta $codigo 2>&1)
+times=(10 10 30 15 40 40 8 6 2 3 3 3 500)
 
-if echo "$pair_result" | grep -qi "successfully"; then
-    echo -e "  ${GREEN}✔ Pareado com sucesso!${NC}"
+percent_targets=(7 15 23 31 38 46 55 59 69 77 87 90 100)
+
+TOTAL_ITEMS=${#items[@]}
+
+status=()
+for ((i=0;i<TOTAL_ITEMS;i++)); do
+    status+=("future")
+done
+
+ascii_lines=(
+"  _  __      _ _           _____ ______     "
+" l l/ /___ _l l l ___ _ _l  ___/  ___l     "
+" l   </ _ ' l l l/ _ \ '__l l__ \___ \\\\   "
+" l_l\_\___,_l_l_l\___/_l   \____/_____/     "
+)
+
+spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
+spinner_index=0
+
+# ========================
+# Função barra
+# ========================
+draw_bar() {
+
+    percent=$1
+    completed=$2
+    timer=$3
+    scanner_pos=$4
+
+    filled=$(( BAR_SIZE * percent / 100 ))
+[ $filled -ge $BAR_SIZE ] && filled=$((BAR_SIZE - 1))
+    scanner_width=3
+
+    bar="${WHITE}["
+
+    for ((i=0;i<BAR_SIZE;i++)); do
+
+        if [ $i -lt $filled ]; then
+
+            # removido rastro branco
+            if [ $percent -ge 90 ]; then
+    bar+="${LIGHT_GREEN}█${NC}"
 else
-    echo -e "  ${RED}✖ Falha no pareamento${NC}"
-    echo "$pair_result"
+    bar+="${LIGHT_CYAN}█${NC}"
 fi
 
-echo ""
-echo -e "    ${YELLOW}Volte à tela principal de \"Depuração sem fio\".${NC}"
-echo -e "    ${YELLOW}Anote a PORTA mostrada ao lado do endereço IP.${NC}"
+        else
 
-echo ""
+            rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
+
+            if [ $rel -lt $scanner_width ]; then
+
+                if [ $rel -eq 0 -o $rel -eq 2 ]; then
+                    bar+="${LIGHT_GREEN}░${NC}"
+
+                elif [ $rel -eq 1 ]; then
+                    bar+="${LIGHT_ORANGE}░${NC}"
+                fi
+
+            else
+                bar+="░"
+            fi
+        fi
+    done
+
+    bar+="${WHITE}]${NC}"
+
+echo -ne "$bar $percent% $timer $completed/${#items[@]}"
+}
 
 # ========================
-# CONEXÃO (REAL ADB)
+# Loop principal
 # ========================
+start_time=$(date +%s)
+highlight_index=0
+scanner_pos=0
+display_percent=0
 
-echo -ne "  ${BRIGHT_CYAN}▸ Porta de conexão (ex: 43210):${NC}${GREEN} "
-read porta_conexao
+# Pré-preencher tela
+clear
+for ((i=0;i<40;i++)); do
+    echo ""
+done
 
-echo ""
-echo -e "  ${LIGHT_BLUE}→ Conectando...${NC}"
+for ((step=0; step<TOTAL_ITEMS; step++)); do
 
-connect_result=$(adb connect localhost:$porta_conexao 2>&1)
+    for ((i=0;i<TOTAL_ITEMS;i++)); do
 
-# remove "already " da mensagem
-connect_result=$(echo "$connect_result" | sed 's/already //g')
+        if [ $i -lt $step ]; then
+            status[$i]="done"
 
-# mostra exatamente a linha do adb
-echo "  $connect_result"
+        elif [ $i -eq $step ]; then
+            status[$i]="current"
 
-# mensagem bonita
-if echo "$connect_result" | grep -qi "connected"; then
-    echo -e "  ${GREEN}✔ Dispositivo conectado! Use as opções [1] ou [2] para iniciar o scan.${NC}"
-else
-    echo -e "  ${RED}✖ Falha na conexão.${NC}"
+        else
+            status[$i]="future"
+        fi
+    done
+
+    elapsed_item=0
+
+    while [ $elapsed_item -lt ${times[$step]} ]; do
+
+        # limpa somente ao redimensionar
+        if [ $resize_flag -eq 1 ]; then
+            clear
+            resize_flag=0
+        fi
+
+        current_time=$(date +%s)
+
+        elapsed=$(( current_time - start_time ))
+
+        minutes=$(( elapsed / 60 ))
+        seconds=$(( elapsed % 60 ))
+
+        timer=$(printf "%02d:%02d" $minutes $seconds)
+
+        # Move cursor para topo sem limpar tudo
+        echo -ne "\033[H"
+
+        echo ""
+        echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
+        echo -e "  ${WHITE}discord.gg/allianceoficial${NC}\033[K"
+        echo ""
+
+        for ((i=0;i<${#ascii_lines[@]};i++)); do
+
+            if [ $i -eq $highlight_index ]; then
+                echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
+
+            else
+                echo -e "${CYAN}${ascii_lines[$i]}${NC}\033[K"
+            fi
+        done
+
+        highlight_index=$(( (highlight_index + 1) % ${#ascii_lines[@]} ))
+
+        echo ""
+        echo -e "${CYAN}  Coded By: KellerSS${NC}\033[K"
+        echo ""
+
+        echo -ne "${LIGHT_CYAN}${spinner[$spinner_index]}${NC} "
+
+        target=${percent_targets[$step]}
+
+step_size=2
+
+if [ $display_percent -lt $target ]; then
+    display_percent=$((display_percent + step_size))
+
+    if [ $display_percent -gt $target ]; then
+        display_percent=$target
+    fi
 fi
 
-echo ""
+display_step=$((step + 1))
+draw_bar $display_percent $display_step $timer $scanner_pos
 
-echo -ne "  ${WHITE}Pressione Enter para voltar ao menu...${NC}"
-read
+        spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
+
+        echo -e "\n"
+
+        for ((i=0;i<TOTAL_ITEMS;i++)); do
+
+            case ${status[$i]} in
+
+                done)
+                    echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K"
+                ;;
+
+                current)
+                    echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}\033[K"
+                ;;
+
+                future)
+                    echo -e "  ${GRAY}•${NC} ${items[$i]}\033[K"
+                ;;
+
+            esac
+        done
+
+        scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
+
+        sleep 0.03
+
+        ((elapsed_item++))
+    done
+done
