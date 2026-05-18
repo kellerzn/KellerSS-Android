@@ -9,6 +9,7 @@ CYAN="\033[0;36m"
 BOX_CYAN="\033[38;2;0;180;255m"
 LIGHT_CYAN="\033[1;96m"
 WHITE="\033[1;37m"
+WHITE_LOGO="\033[1;37m"
 GREEN="\033[0;32m"
 LIGHT_GREEN="\033[1;32m"
 ORANGE="\033[38;2;255;140;26m"
@@ -19,28 +20,16 @@ AZUL_PERSONAL="\033[38;2;70;130;180m"
 YELLOW="\033[38;2;255;255;85m"
 NC="\033[0m"
 
-# ========================
-# Ocultar cursor
-# ========================
 echo -ne "\e[?25l"
 
-# ========================
-# Corrigir duplicação ao mudar resolução (TECLADO)
-# ========================
 resize_flag=0
 trap 'resize_flag=1; sleep 0.05' SIGWINCH
 
-# ========================
-# Restaurar terminal ao sair
-# ========================
 cleanup() {
     echo -ne "\e[?25h"
 }
 trap cleanup EXIT INT TERM
 
-# ========================
-# Configurações
-# ========================
 BAR_SIZE=20
 
 items=("Identificando aparelho e ambiente..."
@@ -68,6 +57,14 @@ for ((i=0;i<TOTAL_ITEMS;i++)); do
     status+=("future")
 done
 
+# 🔥 FIX IMPORTANTE (RESET DO EFEITO DE PISCADA)
+blink_done=()
+blink_state=()
+for ((i=0;i<TOTAL_ITEMS;i++)); do
+    blink_done[i]=0
+    blink_state[i]=0
+done
+
 ascii_lines=(
 "  _  __      _ _           _____ ______     "
 " l l/ /___ _l l l ___ _ _l  ___/  ___l     "
@@ -78,9 +75,6 @@ ascii_lines=(
 spinner=("⠏" "⠛" "⠹" "⠼" "⠴" "⠦" "⠧" "⠇")
 spinner_index=0
 
-# ========================
-# Função barra
-# ========================
 draw_bar() {
 
     percent=$1
@@ -93,9 +87,7 @@ draw_bar() {
     scanner_width=3
 
     bar="${WHITE}["
-
     for ((i=0;i<BAR_SIZE;i++)); do
-
         if [ $i -lt $filled ]; then
             if [ $percent -ge 90 ]; then
                 bar+="${LIGHT_GREEN}█${NC}"
@@ -120,18 +112,20 @@ draw_bar() {
     echo -ne "$bar $percent% $timer $completed/${#items[@]}"
 }
 
-# ========================
-# Loop principal
-# ========================
 start_time=$(date +%s)
 highlight_index=0
 scanner_pos=0
 display_percent=0
 
-# limpa tela inicial
 printf "\033[2J\033[H"
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
+
+    # 🔥 RESET DA PISCADA AQUI
+    for ((i=0;i<TOTAL_ITEMS;i++)); do
+        blink_done[$i]=0
+        blink_state[$i]=0
+    done
 
     for ((i=0;i<TOTAL_ITEMS;i++)); do
         if [ $i -lt $step ]; then
@@ -147,16 +141,12 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
-        # ========================
-        # FIX TECLADO / RESIZE BUG
-        # ========================
         if [ $resize_flag -eq 1 ]; then
             printf "\033[2J\033[H"
             resize_flag=0
         fi
 
         current_time=$(date +%s)
-
         elapsed=$(( current_time - start_time ))
         minutes=$(( elapsed / 60 ))
         seconds=$(( elapsed % 60 ))
@@ -171,7 +161,7 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         for ((i=0;i<${#ascii_lines[@]};i++)); do
             if [ $i -eq $highlight_index ]; then
-                echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
+                echo -e "${WHITE_LOGO}${ascii_lines[$i]}${NC}\033[K"
             else
                 echo -e "${CYAN_LOGO}${ascii_lines[$i]}${NC}\033[K"
             fi
@@ -188,14 +178,13 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         target=${percent_targets[$step]}
 
         step_size=2
-
         if [ $display_percent -lt $target ]; then
             display_percent=$((display_percent + step_size))
             [ $display_percent -gt $target ] && display_percent=$target
         fi
 
         display_step=$((step + 1))
-        draw_bar $display_percent $display_step "$timer" $scanner_pos
+        draw_bar $display_percent $display_step $timer $scanner_pos
 
         spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
 
@@ -207,7 +196,28 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
                     echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K"
                 ;;
                 current)
-                    echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}\033[K"
+                    if [ ${blink_done[$i]} -eq 0 ]; then
+                        case ${blink_state[$i]} in
+                            0)
+                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
+                                blink_state[$i]=1
+                            ;;
+                            1)
+                                echo -e "  ${LIGHT_CYAN}➤ ${WHITE}${items[$i]}\033[K"
+                                blink_state[$i]=2
+                            ;;
+                            2)
+                                echo -e "  \033[7m➤ ${WHITE}${items[$i]}\033[0m\033[K"
+                                blink_state[$i]=3
+                            ;;
+                            3)
+                                echo -e "  ${LIGHT_CYAN}➤ ${WHITE}${items[$i]}\033[K"
+                                blink_done[$i]=1
+                            ;;
+                        esac
+                    else
+                        echo -e "  ${LIGHT_CYAN}➤ ${WHITE}${items[$i]}\033[K"
+                    fi
                 ;;
                 future)
                     echo -e "  ${GRAY}•${NC} ${items[$i]}\033[K"
