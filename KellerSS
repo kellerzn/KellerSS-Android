@@ -31,6 +31,11 @@ resize_flag=0
 trap 'resize_flag=1' SIGWINCH
 
 # ========================
+# RESOLUÇÃO FIXA DA UI (ANTI-BUG TECLADO)
+# ========================
+UI_HEIGHT=18
+
+# ========================
 # Restaurar terminal ao sair
 # ========================
 cleanup() {
@@ -98,27 +103,20 @@ draw_bar() {
     for ((i=0;i<BAR_SIZE;i++)); do
 
         if [ $i -lt $filled ]; then
-
-            # removido rastro branco
             if [ $percent -ge 90 ]; then
                 bar+="${LIGHT_GREEN}█${NC}"
             else
                 bar+="${LIGHT_CYAN}█${NC}"
             fi
-
         else
-
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
 
             if [ $rel -lt $scanner_width ]; then
-
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
                     bar+="${YELLOW}░${NC}"
-
                 elif [ $rel -eq 1 ]; then
                     bar+="${ORANGE}░${NC}"
                 fi
-
             else
                 bar+="░"
             fi
@@ -138,22 +136,20 @@ highlight_index=0
 scanner_pos=0
 display_percent=0
 
-# Pré-preencher tela
 clear
-for ((i=0;i<40;i++)); do
+
+# usa altura fixa pra não quebrar com teclado
+for ((i=0;i<UI_HEIGHT;i++)); do
     echo ""
 done
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     for ((i=0;i<TOTAL_ITEMS;i++)); do
-
         if [ $i -lt $step ]; then
             status[$i]="done"
-
         elif [ $i -eq $step ]; then
             status[$i]="current"
-
         else
             status[$i]="future"
         fi
@@ -163,10 +159,14 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
-        # limpa somente ao redimensionar
         if [ $resize_flag -eq 1 ]; then
             clear
             resize_flag=0
+
+            # reequilibra tela quando teclado abre/fecha
+            for ((i=0;i<UI_HEIGHT;i++)); do
+                echo ""
+            done
         fi
 
         current_time=$(date +%s)
@@ -178,7 +178,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Move cursor para topo sem limpar tudo
         echo -ne "\033[H"
 
         echo ""
@@ -187,10 +186,8 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         echo ""
 
         for ((i=0;i<${#ascii_lines[@]};i++)); do
-
             if [ $i -eq $highlight_index ]; then
                 echo -e "${WHITE}${ascii_lines[$i]}${NC}\033[K"
-
             else
                 echo -e "${CYAN_LOGO}${ascii_lines[$i]}${NC}\033[K"
             fi
@@ -210,7 +207,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         if [ $display_percent -lt $target ]; then
             display_percent=$((display_percent + step_size))
-
             if [ $display_percent -gt $target ]; then
                 display_percent=$target
             fi
@@ -224,21 +220,16 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         echo -e "\n"
 
         for ((i=0;i<TOTAL_ITEMS;i++)); do
-
             case ${status[$i]} in
-
                 done)
                     echo -e "  ${GREEN}✔${NC} ${items[$i]}\033[K"
                 ;;
-
                 current)
                     echo -e "  ${LIGHT_CYAN}➤${WHITE} ${items[$i]}\033[K"
                 ;;
-
                 future)
                     echo -e "  ${GRAY}•${NC} ${items[$i]}\033[K"
                 ;;
-
             esac
         done
 
