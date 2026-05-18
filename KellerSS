@@ -9,11 +9,11 @@ clear
 CYAN="\033[0;36m"
 BOX_CYAN="\033[38;2;0;200;220m"
 BRIGHT_CYAN="\033[1;36m"
-ORANGE="\033[38;2;255;165;0m"
+ORANGE="\033[38;2;255;140;26m"
 WHITE="\033[1;37m"
-GREEN="\033[1;32m"
-YELLOW="\033[38;2;255;255;120m"
-DARK_PURPLE="\033[0;35m"
+GREEN="\033[38;2;57;255;20m"
+YELLOW="\033[38;2;255;217;61m"
+PURPLE="\033[38;2;106;61;255m"
 RED="\033[0;31m"
 NC="\033[0m"
 
@@ -39,7 +39,6 @@ echo -e "  ${CYAN}Coded By: KellerSS${NC}"
 echo ""
 echo -e "  ${ORANGE}⚠ Nenhum dispositivo conectado — prosseguindo para reconexão manual.${NC}"
 
-echo ""
 echo -e "  ${BRIGHT_CYAN}┌─RECONEXÃO${NC}"
 echo -e "   ${YELLOW}Abra: Configurações → Opções do Desenvolvedor → Depuração sem fio${NC}"
 echo -e "   ${YELLOW}Toque em \"Parear com código de pareamento\" e anote a PORTA e o CÓDIGO.${NC}"
@@ -57,7 +56,7 @@ echo -ne "  ${BRIGHT_CYAN}▸ Código de pareamento (6 dígitos):${NC}${GREEN} "
 read codigo
 
 echo ""
-echo -e "  ${DARK_PURPLE}→ Pareando...${NC}"
+echo -e "  ${PURPLE}→ Pareando...${NC}"
 
 pair_result=$(adb pair 127.0.0.1:$porta $codigo 2>&1)
 
@@ -82,7 +81,7 @@ echo -ne "  ${BRIGHT_CYAN}▸ Porta de conexão (ex: 43210):${NC}${GREEN} "
 read porta_conexao
 
 echo ""
-echo -e "  ${DARK_PURPLE}→ Conectando...${NC}"
+echo -e "  ${PURPLE}→ Conectando...${NC}"
 
 connect_result=$(adb connect localhost:$porta_conexao 2>&1)
 
