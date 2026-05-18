@@ -11,8 +11,8 @@ BOX_CYAN="\033[38;2;0;200;220m"
 BRIGHT_CYAN="\033[1;36m"
 ORANGE="\033[38;2;255;120;0m"
 WHITE="\033[1;37m"
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
+GREEN="\033[1;32m"
+YELLOW="\033[0;33m"
 DARK_PURPLE="\033[0;35m"
 RED="\033[0;31m"
 NC="\033[0m"
@@ -28,10 +28,10 @@ echo -e "  ${WHITE}discord.gg/allianceoficial${NC}"
 echo ""
 
 echo -e "${BRIGHT_CYAN}"
-echo "  _  __       _ _           _____ ______     "
-echo " l l/ / ___ _l l l ___ _ _l   __/ ____l     "
-echo " l   < / _ \ l l l/ _ \ '__l l__ \___     "
-echo " l_l\_ \___,_l_l_l\___/_l   \____/_____/     "
+echo "  _  __       _ _           _____ ______"
+echo " | |/ / ___ | | | ___ _ __|   __/ ____|"
+echo " |   < / _ \| | |/ _ \ '__|  |__ \___ \\"
+echo " |_|\_\___/|_|_|\___/_|   \____/_____/ "
 echo -e "${NC}"
 
 echo -e "  ${CYAN}Coded By: KellerSS${NC}"
@@ -87,13 +87,11 @@ echo -e "  ${DARK_PURPLE}→ Conectando...${NC}"
 connect_result=$(adb connect localhost:$porta_conexao 2>&1)
 
 # mostra exatamente a linha do adb
-clean_result=$(echo "$connect_result" | grep -i "connected to" | head -n 1)
-
-echo "  ${clean_result//already /}"
+echo "  $connect_result"
 
 # mensagem bonita por cima
 if echo "$connect_result" | grep -qi "connected"; then
-    echo -e "  ${GREEN}✔ Dispositivo conectado! Use as opções [1] ou [2] para iniciar o scan. ${NC}"
+    echo -e "  ${GREEN}✔ Dispositivo conectado!${NC}"
 else
     echo -e "  ${RED}✖ Falha na conexão${NC}"
 fi
