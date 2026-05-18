@@ -118,6 +118,7 @@ scanner_pos=0
 display_percent=0
 
 printf "\033[2J\033[H"
+printf "" >&2
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
 
