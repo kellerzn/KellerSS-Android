@@ -100,5 +100,5 @@ fi
 
 echo ""
 
-echo -ne " ${WHITE}Pressione Enter para voltar ao menu...${NC}"
+echo -ne "  ${WHITE}Pressione Enter para voltar ao menu...${NC}"
 read
