@@ -25,15 +25,10 @@ NC="\033[0m"
 echo -ne "\e[?25l"
 
 # ========================
-# Corrigir duplicação ao mudar resolução
+# Corrigir duplicação ao mudar resolução (TECLADO)
 # ========================
 resize_flag=0
-trap 'resize_flag=1' SIGWINCH
-
-# ========================
-# RESOLUÇÃO FIXA DA UI (ANTI-BUG TECLADO)
-# ========================
-UI_HEIGHT=18
+trap 'resize_flag=1; sleep 0.05' SIGWINCH
 
 # ========================
 # Restaurar terminal ao sair
@@ -95,7 +90,6 @@ draw_bar() {
 
     filled=$(( BAR_SIZE * percent / 100 ))
     [ $filled -ge $BAR_SIZE ] && filled=$((BAR_SIZE - 1))
-
     scanner_width=3
 
     bar="${WHITE}["
@@ -110,11 +104,10 @@ draw_bar() {
             fi
         else
             rel=$(( (i - scanner_pos + BAR_SIZE) % BAR_SIZE ))
-
             if [ $rel -lt $scanner_width ]; then
                 if [ $rel -eq 0 -o $rel -eq 2 ]; then
                     bar+="${YELLOW}░${NC}"
-                elif [ $rel -eq 1 ]; then
+                else
                     bar+="${ORANGE}░${NC}"
                 fi
             else
@@ -124,7 +117,6 @@ draw_bar() {
     done
 
     bar+="${WHITE}]${NC}"
-
     echo -ne "$bar $percent% $timer $completed/${#items[@]}"
 }
 
@@ -136,12 +128,8 @@ highlight_index=0
 scanner_pos=0
 display_percent=0
 
-clear
-
-# usa altura fixa pra não quebrar com teclado
-for ((i=0;i<UI_HEIGHT;i++)); do
-    echo ""
-done
+# limpa tela inicial
+printf "\033[2J\033[H"
 
 for ((step=0; step<TOTAL_ITEMS; step++)); do
 
@@ -159,26 +147,22 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
+        # ========================
+        # FIX TECLADO / RESIZE BUG
+        # ========================
         if [ $resize_flag -eq 1 ]; then
-            clear
+            printf "\033[2J\033[H"
             resize_flag=0
-
-            # reequilibra tela quando teclado abre/fecha
-            for ((i=0;i<UI_HEIGHT;i++)); do
-                echo ""
-            done
         fi
 
         current_time=$(date +%s)
 
         elapsed=$(( current_time - start_time ))
-
         minutes=$(( elapsed / 60 ))
         seconds=$(( elapsed % 60 ))
-
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        echo -ne "\033[H"
+        printf "\033[H"
 
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
@@ -207,13 +191,11 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         if [ $display_percent -lt $target ]; then
             display_percent=$((display_percent + step_size))
-            if [ $display_percent -gt $target ]; then
-                display_percent=$target
-            fi
+            [ $display_percent -gt $target ] && display_percent=$target
         fi
 
         display_step=$((step + 1))
-        draw_bar $display_percent $display_step $timer $scanner_pos
+        draw_bar $display_percent $display_step "$timer" $scanner_pos
 
         spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
 
@@ -236,7 +218,6 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
         scanner_pos=$(( (scanner_pos + 1) % BAR_SIZE ))
 
         sleep 0.03
-
         ((elapsed_item++))
     done
 done
