@@ -40,8 +40,8 @@ echo ""
 echo -e "  ${ORANGE}⚠ Nenhum dispositivo conectado — prosseguindo para reconexão manual.${NC}"
 
 echo -e "  ${BRIGHT_CYAN}┌─RECONEXÃO${NC}"
-echo -e "   ${YELLOW}Abra: Configurações → Opções do Desenvolvedor → Depuração sem fio${NC}"
-echo -e "   ${YELLOW}Toque em \"Parear com código de pareamento\" e anote a PORTA e o CÓDIGO.${NC}"
+echo -e "    ${YELLOW}Abra: Configurações → Opções do Desenvolvedor → Depuração sem fio${NC}"
+echo -e "    ${YELLOW}Toque em \"Parear com código de pareamento\" e anote a PORTA e o CÓDIGO.${NC}"
 
 echo ""
 
@@ -68,8 +68,8 @@ else
 fi
 
 echo ""
-echo -e "  ${YELLOW}Volte à tela principal de \"Depuração sem fio\".${NC}"
-echo -e "  ${YELLOW}Anote a PORTA mostrada ao lado do endereço IP.${NC}"
+echo -e "    ${YELLOW}Volte à tela principal de \"Depuração sem fio\".${NC}"
+echo -e "    ${YELLOW}Anote a PORTA mostrada ao lado do endereço IP.${NC}"
 
 echo ""
 
