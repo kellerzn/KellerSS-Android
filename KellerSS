@@ -647,7 +647,7 @@ echo -e "  ${CYAN}│ HWID         ${NC}: 1CFE44C07CC3573E                     $
 echo -e "  ${CYAN}├───────────────────────────────────────────────────────┤${NC}"
 echo -e "  ${CYAN}│ ${WHITE}► Origem                                              ${CYAN}│${NC}"
 echo -e "  ${CYAN}│ Instalador   ${NC}: com.android.vending - Google Play Store${CYAN}│${NC}"
-echo -e "  ${CYAN}│ Classificação${NC}: ${GREEN}✅${NC}seguro - Google Play Store           ${CYAN}│${NC}"
+echo -e "  ${CYAN}│ Classificação${NC}: ${GREEN} ✅${NC}seguro - Google Play Store          ${CYAN}│${NC}"
 echo -e "  ${CYAN}├───────────────────────────────────────────────────────┤${NC}"
 echo -e "  ${CYAN}│ ${WHITE}► Resultado                                           ${CYAN}│${NC}"
 echo -e "  ${CYAN}│ Alertas      ${NC}: 0                                      ${CYAN}│${NC}"
