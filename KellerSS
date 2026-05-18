@@ -89,7 +89,8 @@ draw_bar() {
     scanner_pos=$4
 
     filled=$(( BAR_SIZE * percent / 100 ))
-[ $filled -ge $BAR_SIZE ] && filled=$((BAR_SIZE - 1))
+    [ $filled -ge $BAR_SIZE ] && filled=$((BAR_SIZE - 1))
+
     scanner_width=3
 
     bar="${WHITE}["
@@ -98,12 +99,11 @@ draw_bar() {
 
         if [ $i -lt $filled ]; then
 
-            # removido rastro branco
             if [ $percent -ge 90 ]; then
-    bar+="${LIGHT_GREEN}█${NC}"
-else
-    bar+="${LIGHT_CYAN}█${NC}"
-fi
+                bar+="${LIGHT_GREEN}█${NC}"
+            else
+                bar+="${LIGHT_CYAN}█${NC}"
+            fi
 
         else
 
@@ -126,7 +126,7 @@ fi
 
     bar+="${WHITE}]${NC}"
 
-echo -ne "$bar $percent% $timer $completed/${#items[@]}"
+    echo -ne "$bar $percent% $timer $completed/${#items[@]}"
 }
 
 # ========================
@@ -137,9 +137,13 @@ highlight_index=0
 scanner_pos=0
 display_percent=0
 
+# ========================
 # Pré-preencher tela
+# ========================
 clear
-for ((i=0;i<40;i++)); do
+LINES=$(tput lines)
+
+for ((i=0;i<LINES;i++)); do
     echo ""
 done
 
@@ -162,9 +166,10 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
     while [ $elapsed_item -lt ${times[$step]} ]; do
 
-        # limpa somente ao redimensionar
+        # Ajusta somente ao redimensionar
         if [ $resize_flag -eq 1 ]; then
-            clear
+            tput cup 0 0
+            tput ed
             resize_flag=0
         fi
 
@@ -177,8 +182,9 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         timer=$(printf "%02d:%02d" $minutes $seconds)
 
-        # Move cursor para topo sem limpar tudo
-        echo -ne "\033[H"
+        # Move cursor para topo
+        tput cup 0 0
+        tput ed
 
         echo ""
         echo -e "  ${BRIGHT_CYAN}KellerSS Android${NC} ${BOX_CYAN}Fucking Cheaters${NC}\033[K"
@@ -205,18 +211,18 @@ for ((step=0; step<TOTAL_ITEMS; step++)); do
 
         target=${percent_targets[$step]}
 
-step_size=2
+        step_size=2
 
-if [ $display_percent -lt $target ]; then
-    display_percent=$((display_percent + step_size))
+        if [ $display_percent -lt $target ]; then
+            display_percent=$((display_percent + step_size))
 
-    if [ $display_percent -gt $target ]; then
-        display_percent=$target
-    fi
-fi
+            if [ $display_percent -gt $target ]; then
+                display_percent=$target
+            fi
+        fi
 
-display_step=$((step + 1))
-draw_bar $display_percent $display_step $timer $scanner_pos
+        display_step=$((step + 1))
+        draw_bar $display_percent $display_step $timer $scanner_pos
 
         spinner_index=$(( (spinner_index + 1) % ${#spinner[@]} ))
 
